@@ -7,12 +7,17 @@
 		<script src="resources/sap-ui-core.js"
 				id="sap-ui-bootstrap"
 				data-sap-ui-libs="sap.m"
-				data-sap-ui-theme="sap_bluecrystal">
+				data-sap-ui-theme="sap_bluecrystal"
+				data-sap-ui-resourceroots='{"WT4":""}'>
 		</script>
 		<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
 
 		<script>
-			
+			sap.ui.getCore().attachInit(function(){
+				sap.ui.xmlview({
+					viewName : "WT4.view.address"
+				}).placeAt("content");
+			})
 		</script>
 
 	</head>
