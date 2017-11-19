@@ -1,9 +1,10 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
 	controllerName="WT4.controller.address" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
-		<Page title="Willkommen">
+		<Page title="{i18n>panelText}">
 			<content>
-				<Text text="Hallo Welt"/>
+				<Text text="{i18n>hello}"/>
+				<Text text="{i18n>world}"/>
 			</content>
 		</Page>
 	</App>

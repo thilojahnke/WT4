@@ -14,10 +14,10 @@
 
 		<script>
 			sap.ui.getCore().attachInit(function(){
-				sap.ui.xmlview({
-					viewName : "WT4.view.address"
+				new sap.ui.core.ComponentContainer({
+					name : "WT4"
 				}).placeAt("content");
-			})
+			});
 		</script>
 
 	</head>
