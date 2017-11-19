@@ -1,11 +1,22 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+<mvc:View xmlns:l="sap.ui.layout" 
+          xmlns:mvc="sap.ui.core.mvc" 
+          xmlns="sap.m"
 	controllerName="WT4.controller.address" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
-		<Page title="{i18n>panelText}">
-			<content>
-				<Text text="{i18n>hello}"/>
-				<Text text="{i18n>world}"/>
-			</content>
-		</Page>
+	<Page title="{i18n>pageTitle}">
+	<Panel headerText="{i18n>panelText}">
+	<l:VerticalLayout class="sapUIContentPadding" width="100%">
+	    
+			<l:content>
+				    <Input value="10" description="{i18n>hello}" fieldWidth="10%" class="sapUiSmallMarginBottom" />
+					<Text text="{i18n>hello}" />
+					<Text text="{i18n>hello}" />
+					<Text text="{i18n>world}" />
+				
+			</l:content>
+	
+	</l:VerticalLayout>
+	</Panel>
+	</Page>
 	</App>
 </mvc:View>
