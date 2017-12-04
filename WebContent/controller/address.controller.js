@@ -7,7 +7,11 @@ sap.ui.define([
   return Controller.extend("WT4.controller.address",{
 	  onInit: function(){
 		  
-	  }
+	  },
+     onButtonPress: function(){
+    	var oAdrComponent = this.getOwnerComponent();
+    	
+     }
 	  
   });
 
