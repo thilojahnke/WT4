@@ -8,9 +8,11 @@ sap.ui.define([
 	  onInit: function(){
 		  
 	  },
-     onButtonPress: function(){
-    	var oAdrComponent = this.getOwnerComponent();
-    	
+	  OnButtonPress: function(){
+		  var oAdrComponent = this.getOwnerComponent();
+		  var oDefaultModel = oAdrComponent.getModel();
+		  oDefaultModel.setProperty("/Adress/name1","William");
+		  
      }
 	  
   });
