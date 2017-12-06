@@ -21,7 +21,9 @@ sap.ui.define([ "sap/ui/core/UIComponent",
 							name2 : "Doom"
 						}
 					}
-                   this.setModel(new JSONModel(oJModelData));
+				   var oJsonModel = new JSONModel(oJModelData);
+					this.setModel(oJsonModel);
+                   
 				}
 			});
 		});
