@@ -1,6 +1,16 @@
 {
- "Adresses" : {
-    "name1" : "John",
-    "name2" : "Doo"
-} 
+	"Adresses": [
+		{
+			"name1": "John",
+			"name2": "Doo"
+		},
+		{
+			"name1": "William",
+			"name2": "Little"
+		},
+		{
+			"name1": "Susan",
+			"name2": "Vega"
+		}
+	]
 }

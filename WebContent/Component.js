@@ -15,14 +15,14 @@ sap.ui.define([ "sap/ui/core/UIComponent",
 						bundleName : "WT4.i18n.i18n"
 					});
 					this.setModel(i18nModel, "i18n");
-					var oJModelData = {
-						Adress : {
-							name1 : "John",
-							name2 : "Doom"
-						}
-					}
-				   var oJsonModel = new JSONModel(oJModelData);
-					this.setModel(oJsonModel);
+//					var oJModelData = {
+//						nummer : 0,
+//						name1 : "Init",
+//						name2 : "Init"
+//					}
+//
+//    			   var oJsonModel = new JSONModel(oJModelData);
+//					this.setModel(oJsonModel);
                    
 				}
 			});

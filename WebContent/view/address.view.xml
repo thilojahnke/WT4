@@ -26,12 +26,12 @@
 							    </f:FormElement>
 								<f:FormElement label="Name1">
 									<f:fields>
-										<Text text="{adr>name1}" id="name1" />
+										<Text text="{name1}" id="name1" />
 									</f:fields>
 								</f:FormElement>
 								<f:FormElement label="Name2">
 									<f:fields>
-										<Text text="{adr>name2}" id="name2" />
+										<Text text="{name2}" id="name2" />
 									</f:fields>
 								</f:FormElement>
 								</f:formElements>
