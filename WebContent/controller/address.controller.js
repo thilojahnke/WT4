@@ -29,19 +29,44 @@ sap.ui.define([
 //		  var oAdrView = this.getView();
 //		  var oAdrModel = oAdrView.getModel();
 	  },
-	  OnButtonPress: function(){
-		  var oAdrComponent = this.getOwnerComponent();
+	  onButtonPressUp: function(){
+		  this.nextAdress("UP");		  
+     },
+     onButtonPressDown: function(){
+    	 this.nextAdress("DOWN");
+     },
+     nextAdress:function(direction){
+    	 var oAdrComponent = this.getOwnerComponent();
 		  var oDefaultModel = this.getView().getModel();
 		  var oAdrModel = oAdrComponent.getModel("adr");
-		  var sPathToAdress = "/Adresses/"+oDefaultModel.getProperty("/nummer")+"/";
+		  var nEntryNumber = oDefaultModel.getProperty("/nummer");
+		  if (direction==="UP"){
+			  nEntryNumber++;
+		  }else {
+			  nEntryNumber--;
+		  };
+	      
+		  var sPathToAdress = "/Adresses/"+nEntryNumber+"/";
 		  var oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
 		  
 		  oDefaultModel.setProperty("/name1", oAdrModelDetail.name1);
 		  oDefaultModel.setProperty("/name2", oAdrModelDetail.name2);
-		  oDefaultModel.setProperty("/nummer",oDefaultModel.getProperty("/nummer")+1);
+		  oDefaultModel.setProperty("/nummer",nEntryNumber);
 		  
 		  
-	  
+		  
+     },
+     onAdressEntry:function(oEvent){
+    	 let oAdrComponent = this.getOwnerComponent();
+		  let oDefaultModel = this.getView().getModel();
+		  let oAdrModel = oAdrComponent.getModel("adr");
+		  let strInput = oEvent.getParameter("value");
+		  let sPathToAdress = "/Adresses/"+strInput+"/";
+		  oDefaultModel.setProperty("/nummer",strInput);
+		  let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
+		  oDefaultModel.setProperty("/name1", oAdrModelDetail.name1);
+		  oDefaultModel.setProperty("/name2", oAdrModelDetail.name2);
+		  
 		  
      }
 	  
