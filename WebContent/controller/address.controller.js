@@ -21,19 +21,29 @@ sap.ui.define([
 
 		  
 		  var oAdrElement = this.getView().byId("page1");
-//		  var oAdrBinding = { path: "/Adresses/0/", model:"adr" };
 		  var oAdrBinding = "/";
 		  var oAdrElementBound = oAdrElement.bindElement(oAdrBinding);
 		  
-//		  var oJsonBinding = oDefaultModel.bindContext("/Adress");
-//		  var oAdrView = this.getView();
-//		  var oAdrModel = oAdrView.getModel();
+		  
+		  
+
 	  },
 	  onButtonPressUp: function(){
 		  this.nextAdress("UP");		  
      },
      onButtonPressDown: function(){
     	 this.nextAdress("DOWN");
+     },
+     jumpAdressNumber: function(self){
+       	 let oAdrComponent = self.getOwnerComponent();
+		  let oDefaultModel = self.getView().getModel();
+		  let oAdrModel = oAdrComponent.getModel("adr");
+		  let sPathToAdress = "/Adresses/"+oDefaultModel.getProperty("/nummer")+"/";
+		  oDefaultModel.setProperty("/nummer",oDefaultModel.getProperty("/nummer"));
+		  let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
+		  oDefaultModel.setProperty("/name1", oAdrModelDetail.name1);
+		  oDefaultModel.setProperty("/name2", oAdrModelDetail.name2);
+		
      },
      nextAdress:function(direction){
     	 var oAdrComponent = this.getOwnerComponent();
@@ -57,7 +67,13 @@ sap.ui.define([
 		  
      },
      onAdressEntry:function(oEvent){
-    	 let oAdrComponent = this.getOwnerComponent();
+    	 let strInput = oEvent.getParameter("value");
+    	 this.getView().getModel().setProperty("/nummer",strInput);
+//    	 let oDefaultModel = this.getView().getModel();
+    	 let func = this.jumpAdressNumber;
+    	 func(this);
+    	 
+/*    	 let oAdrComponent = this.getOwnerComponent();
 		  let oDefaultModel = this.getView().getModel();
 		  let oAdrModel = oAdrComponent.getModel("adr");
 		  let strInput = oEvent.getParameter("value");
@@ -65,7 +81,7 @@ sap.ui.define([
 		  oDefaultModel.setProperty("/nummer",strInput);
 		  let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
 		  oDefaultModel.setProperty("/name1", oAdrModelDetail.name1);
-		  oDefaultModel.setProperty("/name2", oAdrModelDetail.name2);
+		  oDefaultModel.setProperty("/name2", oAdrModelDetail.name2); */
 		  
 		  
      }

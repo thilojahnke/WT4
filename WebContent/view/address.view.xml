@@ -7,7 +7,7 @@
 				<VBox class="sapUiSmallMargin">
 					<f:Form id="V_address_form" editable="true">
 						<f:title>
-							<core:Title text="Meine Adresse" />
+							<core:Title text="{i18n>detailPanel}" />
 						</f:title>
 						<f:layout>
 							<f:ResponsiveGridLayout labelSpanXL="3"
