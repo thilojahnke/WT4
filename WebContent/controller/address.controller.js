@@ -38,8 +38,21 @@ sap.ui.define([
        	 let oAdrComponent = self.getOwnerComponent();
 		  let oDefaultModel = self.getView().getModel();
 		  let oAdrModel = oAdrComponent.getModel("adr");
-		  let sPathToAdress = "/Adresses/"+oDefaultModel.getProperty("/nummer")+"/";
-		  oDefaultModel.setProperty("/nummer",oDefaultModel.getProperty("/nummer"));
+		  let iAdrLength = oAdrModel.getProperty("/Adresses").length;
+		  let strShowNumber = oDefaultModel.getProperty("/nummer");
+		  let iShowNumber = parseInt(strShowNumber);
+		  let strMessageOut = "";
+		  if (iShowNumber < 0 ) {strMessageOut= "less0"}
+		  else if(iShowNumber >= iAdrLength){strMessageOut="higher0"}
+		  else if(isNaN(iShowNumber)) {strMessageOut = "Not a number"};
+		  if (strMessageOut != ""){
+			  sap.m.MessageToast.show(strMessageOut,{
+				  duration: 3000
+			  })
+			   return;
+		  }
+		  oDefaultModel.setProperty("/nummer",strShowNumber);
+		  let sPathToAdress = "/Adresses/"+strShowNumber+"/";
 		  let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
 		  oDefaultModel.setProperty("/name1", oAdrModelDetail.name1);
 		  oDefaultModel.setProperty("/name2", oAdrModelDetail.name2);
