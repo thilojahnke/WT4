@@ -3,9 +3,19 @@ sap.ui.define([
 	"sap/ui/model/resource/ResourceModel",
 	"sap/ui/model/json/JSONModel"
 	
-], function(Controller,ResourceModel,JSONModel){
+	
+	
+], function(Controller,ResourceModel,JSONModel ){
 	
   "use strict";
+  let Formater = function(showNumber,adrLength){
+	  let strMessageOut = '';
+	  if (showNumber < 0 ) {strMessageOut= "less0"}
+	  else if(showNumber >= adrLength){strMessageOut="higher0"}
+	  else if(isNaN(showNumber)) {strMessageOut = "Not a number"};
+	  return strMessageOut;
+	  
+  };
   return Controller.extend("WT4.controller.address",{
 	  onInit: function(){
 		  var oAdrComponent = this.getOwnerComponent();
@@ -15,10 +25,10 @@ sap.ui.define([
 					name1 : "Init",
 					name2 : "Init"
 				};
-
+                     
 			   var oJsonModel = new JSONModel(oJModelData);
 				this.getView().setModel(oJsonModel);
-
+           
 		  
 		  var oAdrElement = this.getView().byId("page1");
 		  var oAdrBinding = "/";
@@ -35,16 +45,15 @@ sap.ui.define([
     	 this.nextAdress("DOWN");
      },
      jumpAdressNumber: function(self){
+    	  
        	 let oAdrComponent = self.getOwnerComponent();
 		  let oDefaultModel = self.getView().getModel();
 		  let oAdrModel = oAdrComponent.getModel("adr");
 		  let iAdrLength = oAdrModel.getProperty("/Adresses").length;
 		  let strShowNumber = oDefaultModel.getProperty("/nummer");
 		  let iShowNumber = parseInt(strShowNumber);
-		  let strMessageOut = "";
-		  if (iShowNumber < 0 ) {strMessageOut= "less0"}
-		  else if(iShowNumber >= iAdrLength){strMessageOut="higher0"}
-		  else if(isNaN(iShowNumber)) {strMessageOut = "Not a number"};
+		  let strMessageOut = Formater(iShowNumber,iAdrLength);
+		
 		  if (strMessageOut != ""){
 			  sap.m.MessageToast.show(strMessageOut,{
 				  duration: 3000
@@ -98,6 +107,7 @@ sap.ui.define([
 		  
 		  
      }
+     
 	  
   });
 

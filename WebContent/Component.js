@@ -2,8 +2,11 @@
  * 
  */
 sap.ui.define([ "sap/ui/core/UIComponent",
-		"sap/ui/model/resource/ResourceModel", "sap/ui/model/json/JSONModel" ],
-		function(UIComponent, ResourceModel, JSONModel) {
+		"sap/ui/model/resource/ResourceModel",
+		"sap/ui/model/json/JSONModel"
+		
+		],
+		function(UIComponent, ResourceModel, JSONModel,Formater) {
 			"use strict";
 			return UIComponent.extend("WT4.Component", {
 				metadata : {
