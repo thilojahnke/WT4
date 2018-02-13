@@ -8,13 +8,16 @@ sap.ui.define([
 ], function(Controller,ResourceModel,JSONModel ){
 	
   "use strict";
-  let Formater = function(showNumber,adrLength){
+  let indexChecker = function(showNumber,adrLength){
 	  let strMessageOut = '';
-	  if (showNumber < 0 ) {strMessageOut= "less0"}
-	  else if(showNumber >= adrLength){strMessageOut="higher0"}
+	  if (showNumber < 0 ) {strMessageOut= "less then 0"}
+	  else if(showNumber >= adrLength){strMessageOut="higher then index"}
 	  else if(isNaN(showNumber)) {strMessageOut = "Not a number"};
 	  return strMessageOut;
 	  
+  };
+  let Joiner = function(arg1,arg2){
+	  return arg1 + ','+arg2
   };
   return Controller.extend("WT4.controller.address",{
 	  onInit: function(){
@@ -31,8 +34,8 @@ sap.ui.define([
            
 		  
 		  var oAdrElement = this.getView().byId("page1");
-		  var oAdrBinding = "/";
-		  var oAdrElementBound = oAdrElement.bindElement(oAdrBinding);
+//		  var oAdrBinding = "/";
+//		  var oAdrElementBound = oAdrElement.bindElement(oAdrBinding);
 		  
 		  
 		  
@@ -52,7 +55,7 @@ sap.ui.define([
 		  let iAdrLength = oAdrModel.getProperty("/Adresses").length;
 		  let strShowNumber = oDefaultModel.getProperty("/nummer");
 		  let iShowNumber = parseInt(strShowNumber);
-		  let strMessageOut = Formater(iShowNumber,iAdrLength);
+		  let strMessageOut = indexChecker(iShowNumber,iAdrLength);
 		
 		  if (strMessageOut != ""){
 			  sap.m.MessageToast.show(strMessageOut,{
@@ -106,7 +109,9 @@ sap.ui.define([
 		  oDefaultModel.setProperty("/name2", oAdrModelDetail.name2); */
 		  
 		  
-     }
+     },
+     
+     joiner : Joiner
      
 	  
   });

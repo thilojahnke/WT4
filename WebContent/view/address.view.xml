@@ -21,19 +21,20 @@
 							    
 							    <f:FormElement>
 							      <f:fields>
-							       <Input value="{nummer}" width="200px" submit="onAdressEntry"/>
+							       <Input value="{/nummer}" width="200px" submit="onAdressEntry"/>
 							       <Button text="U" press="onButtonPressUp" width="40px"/>  
 							       <Button text="D" press ="onButtonPressDown" width="40px"/>   
 							      </f:fields>
 							    </f:FormElement>
 								<f:FormElement label="Name1">
 									<f:fields>
-										<Text text="{name1}" id="name1" />
+										<Text text="{/name1}"  id="name1" />
 									</f:fields>
 								</f:FormElement>
 								<f:FormElement label="Name2"> 
 									<f:fields>
-										<Text text="{name2}" id="name2" />
+										<Text text="{/name2}" id="name2" />
+										<Text text="{parts: [{path: '/name2' },{path: '/name1' }],formatter:'.joiner' }" />
 									</f:fields>
 								</f:FormElement>
 								</f:formElements>
