@@ -49,6 +49,7 @@
 				"type": "sap.ui.model.json.JSONModel",
 				"uri": "address.json"
 			}
-		}
+		},
+	"handleValidation" : true
 	}
 }

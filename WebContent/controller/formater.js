@@ -3,8 +3,12 @@
  */
 sap.ui.define([],function(){
 	"use.strict";
-	let Formater = function(){
-		return 'AS'
-	}
-	return {Formater: Formater }
+	
+	let Joiner = function(arg1,arg2){
+		  return arg1 + ','+arg2
+	  };
+	
+	
+	
+	return {joiner: Joiner }
 	});

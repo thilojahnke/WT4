@@ -1,11 +1,12 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/resource/ResourceModel",
-	"sap/ui/model/json/JSONModel"
+	"sap/ui/model/json/JSONModel",
+	"WT4/controller/formater"
 	
 	
 	
-], function(Controller,ResourceModel,JSONModel ){
+], function(Controller,ResourceModel,JSONModel,Formater ){
 	
   "use strict";
   let indexChecker = function(showNumber,adrLength){
@@ -16,9 +17,7 @@ sap.ui.define([
 	  return strMessageOut;
 	  
   };
-  let Joiner = function(arg1,arg2){
-	  return arg1 + ','+arg2
-  };
+
   return Controller.extend("WT4.controller.address",{
 	  onInit: function(){
 		  var oAdrComponent = this.getOwnerComponent();
@@ -34,6 +33,9 @@ sap.ui.define([
            
 		  
 		  var oAdrElement = this.getView().byId("page1");
+		  var oInputElement = this.getView().byId("inputIndex");
+		  let oMessageManger = sap.ui.getCore().getMessageManager();
+		  oMessageManger.registerObject(oInputElement,true);
 //		  var oAdrBinding = "/";
 //		  var oAdrElementBound = oAdrElement.bindElement(oAdrBinding);
 		  
@@ -55,14 +57,14 @@ sap.ui.define([
 		  let iAdrLength = oAdrModel.getProperty("/Adresses").length;
 		  let strShowNumber = oDefaultModel.getProperty("/nummer");
 		  let iShowNumber = parseInt(strShowNumber);
-		  let strMessageOut = indexChecker(iShowNumber,iAdrLength);
+/*		  let strMessageOut = indexChecker(iShowNumber,iAdrLength);
 		
 		  if (strMessageOut != ""){
 			  sap.m.MessageToast.show(strMessageOut,{
 				  duration: 3000
 			  })
 			   return;
-		  }
+		  } */
 		  oDefaultModel.setProperty("/nummer",strShowNumber);
 		  let sPathToAdress = "/Adresses/"+strShowNumber+"/";
 		  let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
@@ -94,24 +96,14 @@ sap.ui.define([
      onAdressEntry:function(oEvent){
     	 let strInput = oEvent.getParameter("value");
     	 this.getView().getModel().setProperty("/nummer",strInput);
-//    	 let oDefaultModel = this.getView().getModel();
     	 let func = this.jumpAdressNumber;
     	 func(this);
     	 
-/*    	 let oAdrComponent = this.getOwnerComponent();
-		  let oDefaultModel = this.getView().getModel();
-		  let oAdrModel = oAdrComponent.getModel("adr");
-		  let strInput = oEvent.getParameter("value");
-		  let sPathToAdress = "/Adresses/"+strInput+"/";
-		  oDefaultModel.setProperty("/nummer",strInput);
-		  let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
-		  oDefaultModel.setProperty("/name1", oAdrModelDetail.name1);
-		  oDefaultModel.setProperty("/name2", oAdrModelDetail.name2); */
 		  
 		  
      },
      
-     joiner : Joiner
+     joiner : Formater.joiner
      
 	  
   });

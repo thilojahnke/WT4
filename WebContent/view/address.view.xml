@@ -21,7 +21,8 @@
 							    
 							    <f:FormElement>
 							      <f:fields>
-							       <Input value="{/nummer}" width="200px" submit="onAdressEntry"/>
+							       <Input value="{path :'/nummer', type: 'sap.ui.model.type.Integer' ,constraints : {minimum : 0, maximum: 4 }}"
+							                            width="200px" submit="onAdressEntry" id="inputIndex"/>
 							       <Button text="U" press="onButtonPressUp" width="40px"/>  
 							       <Button text="D" press ="onButtonPressDown" width="40px"/>   
 							      </f:fields>
