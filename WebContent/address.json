@@ -1,18 +1,21 @@
 {
 	"Adresses": [
-		{
+		{   "kunnr": "9000209700",
 			"name1": "John",
 			"name2": "Doo"
 		},
 		{
+			"kunnr": "9000209705",
 			"name1": "William",
 			"name2": "Little"
 		},
 		{
+			"kunnr": 	"100A",
 			"name1": "Susan",
 			"name2": "Vega"
 		},
 		{
+		    "kunnr" : "45334",
 			"name1":"Hellen",
 			"name2":"DeMont"
 		}
