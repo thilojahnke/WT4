@@ -99,6 +99,24 @@ sap.ui.define([
 		  
 		  
      },
+     onButtonList:function(){
+    	 let oDialogView = this.getView();
+    	 let oDialog = oDialogView.byId("listDialog");
+    	 
+    	 if (!oDialog){
+    		 oDialog = sap.ui.xmlfragment( oDialogView.getId(), "WT4.view.selectList",this);
+    		 oDialogView.addDependent(oDialog);
+    	 }
+    	 oDialog.open();
+    	 
+     },
+     onDialogClose:function(){
+    	 let oDialogView = this.getView();
+    	 let oDialog = oDialogView.byId("listDialog");
+    	 if (oDialog){
+    		 oDialog.close();
+    	 }
+     },
      
      joiner : Formater.joiner
      

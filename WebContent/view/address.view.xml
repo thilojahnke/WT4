@@ -4,41 +4,81 @@
 	<App>
 		<Page title="{i18n>pageTitle}" id="page1">
 			<Panel headerText="{i18n>panelText}">
-				
-					<l:Grid defaultSpan="XL3 L3 M6 S12">
-					<l:content>
-					
-					
-					<VBox>
-					<Label text="Kundennummer"/>
-					<Label text="Name1:"/>
-					<Label text="Name2"/>
-					</VBox>
-					<VBox>
-					<Text text="{/kunnr}"  id="kunnr" />
-					<Text text="{/name1}"  id="name1" />
-					<Text text="{/name2}"  id="name2" />
-					</VBox>
-					
-					<HBox>
-					 <Button text="U" press="onButtonPressUp" width="40px"/>  
-					 <Button text="D" press ="onButtonPressDown" width="40px"/>
-					 </HBox>
-					 <Input value="{path :'/nummer', type: 'sap.ui.model.type.Integer' ,constraints : {minimum : 0, maximum: 4 }}"
-							                            width="200px" submit="onAdressEntry" id="inputIndex"/>
-					 <Text text="{parts: [{path: '/name2' },{path: '/name1' }],formatter:'.joiner' }" >
-					  <layoutData>
-					 	<l:GridData span="L3 M3 S8"
-						linebreakL="true"
-						linebreakM="true"
-						linebreakS="true" />
-					 </layoutData>
-					 </Text>
-							                            
-					</l:content>
-					
-					</l:Grid>
-				    	
+
+				<f:Form editable="false">
+					<f:title>
+						<core:Title text="{i18n>detailPanel}" />
+					</f:title>
+					<f:layout>
+						<f:GridLayout singleColumn="false" />
+					</f:layout>
+					<f:formContainers>
+						<f:FormContainer>
+
+							<f:title>
+								<core:Title text="Container Label" />
+							</f:title>
+							<f:formElements>
+								<f:FormElement label="Kundennummer">
+									<f:fields>
+										<Text text="{/kunnr}" id="kunnr" />
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Name1">
+									<f:fields>
+										<Text text="{/name1}" id="name1" />
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Name2">
+
+									<f:fields>
+										<Text text="{/name2}" id="name2" />
+									</f:fields>
+								</f:FormElement>
+
+
+							</f:formElements>
+						</f:FormContainer>
+						<f:FormContainer>
+
+							<f:title>
+								<core:Title text="Input Label" />
+							</f:title>
+							<f:formElements>
+								<f:FormElement label="Eingabe">
+									<f:fields>
+									<VBox>
+										<Input	value="{path :'/meta/nummer', type: 'sap.ui.model.type.Integer' ,constraints : {minimum : 0, maximum: 4 }}"
+											width="200px" submit="onAdressEntry" id="inputIndex" />
+											
+									    <Input value="{/kunnr}" width="200px" />
+									    </VBox>
+										<VBox>
+											<Button text="U" press="onButtonPressUp" width="40px" />
+											<Button text="D" press="onButtonPressDown" width="40px" />
+										</VBox>
+										<Button text="LIST" press="onButtonList" width="100%" />
+									</f:fields>
+
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+						<f:FormContainer>
+
+							<f:title>
+								<core:Title text="Description Label" />
+							</f:title>
+							<f:formElements>
+								<f:FormElement label="Description">
+									<f:fields>
+										<Text
+											text="{parts: [{path: '/name2' },{path: '/name1' }],formatter:'.joiner' }" />
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+					</f:formContainers>
+				</f:Form>
 			</Panel>
 		</Page>
 	</App>

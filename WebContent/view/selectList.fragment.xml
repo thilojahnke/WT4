@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+<Dialog id="listDialog" title="Liste">
+
+ <content>
+  <Text text="Einfach"/>
+ </content>
+<buttons>
+<Button text="OK" press="onDialogClose" type = "Accept" />
+</buttons>
+
+
+</Dialog>
+</core:FragmentDefinition>
