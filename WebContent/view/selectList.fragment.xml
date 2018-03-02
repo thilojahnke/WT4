@@ -2,7 +2,18 @@
 <Dialog id="listDialog" title="Liste">
 
  <content>
-  <Text text="Einfach"/>
+   <List headerText="Auswahl" items="{ path : 'adr>/Adresses' }">
+   
+   
+   <StandardListItem title="{parts: [ { path: 'adr>name1' } ,{ path: 'adr>name2' } ] }" description="{path: 'adr>kunnr'} " />
+   
+   
+   
+   
+   
+   
+   
+   </List>
  </content>
 <buttons>
 <Button text="OK" press="onDialogClose" type = "Accept" />
