@@ -1,24 +1,26 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
-<Dialog id="listDialog" title="Liste">
+<SelectDialog id="listDialog" 
+    title="Liste" 
+    noDataText="{i18n>nothingFound}"
+    confirm="handleValueHelpClose"
+    search="handleSearch"  
+    cancel="handleValueHelpCancel"
+    multiSelect="false"
+    items="{ path : 'adr>/Adresses' }" >
 
- <content>
-   <List headerText="Auswahl" items="{ path : 'adr>/Adresses' }">
    
    
-   <StandardListItem title="{parts: [ { path: 'adr>name1' } ,{ path: 'adr>name2' } ] }" description="{path: 'adr>kunnr'} " />
-   
-   
-   
+   <StandardListItem title="{adr>kunnr}" 
+   description="{parts: [{path: 'adr>name1' },{path: 'adr>name2' }]}" 
+   type="Active" />
    
    
    
    
-   </List>
- </content>
-<buttons>
-<Button text="OK" press="onDialogClose" type = "Accept" />
-</buttons>
+   
+   
+   
+ 
 
-
-</Dialog>
+</SelectDialog>
 </core:FragmentDefinition>

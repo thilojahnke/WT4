@@ -19,7 +19,7 @@
 								<core:Title text="Container Label" />
 							</f:title>
 							<f:formElements>
-								<f:FormElement label="Kundennummer">
+								<f:FormElement label="{i18n>kunnr}">
 									<f:fields>
 										<Text text="{/kunnr}" id="kunnr" />
 									</f:fields>
@@ -42,16 +42,18 @@
 						<f:FormContainer>
 
 							<f:title>
-								<core:Title text="Input Label" />
+								<core:Title text="{i18n>chooseKunnr}" />
 							</f:title>
 							<f:formElements>
-								<f:FormElement label="Eingabe">
+								<f:FormElement label="{i18n>kunnr}">
 									<f:fields>
 									<VBox>
-										<Input	value="{path :'/meta/nummer', type: 'sap.ui.model.type.Integer' ,constraints : {minimum : 0, maximum: 4 }}"
-											width="200px" submit="onAdressEntry" id="inputIndex" />
-											
-									    <Input value="{/kunnr}" width="200px" />
+															    
+									     <Input value="{/kunnr}" 
+									      showValueHelp="true"
+									      valueHelpRequest="handleValueHelp"/>
+									       
+									    
 									    </VBox>
 										<VBox>
 											<Button text="U" press="onButtonPressUp" width="40px" />
@@ -69,7 +71,7 @@
 								<core:Title text="Description Label" />
 							</f:title>
 							<f:formElements>
-								<f:FormElement label="Description">
+								<f:FormElement label="{i18n>description}">
 									<f:fields>
 										<Text
 											text="{parts: [{path: '/name2' },{path: '/name1' }],formatter:'.joiner' }" />
