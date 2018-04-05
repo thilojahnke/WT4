@@ -1,23 +1,23 @@
 {
-	"Adresses": [
-		{   "kunnr": "9000209700",
-			"name1": "John",
-			"name2": "Doo"
+	"ADRESSES": [
+		{   "KUNNR": "9000209700",
+			"NAME1": "John",
+			"NAME2": "Doo"
 		},
 		{
-			"kunnr": "9000209705",
-			"name1": "William",
-			"name2": "Little"
+			"KUNNR": "9000209705",
+			"NAME1": "William",
+			"NAME2": "Little"
 		},
 		{
-			"kunnr": 	"100A",
-			"name1": "Susan",
-			"name2": "Vega"
+			"KUNNR": 	"100A",
+			"NAME1": "Susan",
+			"NAME2": "Vega"
 		},
 		{
-		    "kunnr" : "45334",
-			"name1":"Hellen",
-			"name2":"DeMont"
+		    "KUNNR" : "45334",
+			"NAME1":"Hellen",
+			"NAME2":"DeMont"
 		}
 	]
 }

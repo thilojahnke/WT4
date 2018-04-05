@@ -9,6 +9,16 @@
 		"description": "{{appDescription}}",
 		"applicationVersion": {
 			"version": "1.0.0"
+		},
+		"dataSources": {
+			"adressRemote": {
+				"uri": "/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
 		}
 	},
 	"sap.ui": {
@@ -46,10 +56,12 @@
 				}
 			},
 			"adr": {
-				"type": "sap.ui.model.json.JSONModel",
-				"uri": "address.json"
+				"type": "sap.ui.model.json.JSONModel"
+			},
+			"oAdr": {
+				"dataSource": "adressRemote"
 			}
 		},
-	"handleValidation" : true
+		"handleValidation": true
 	}
 }

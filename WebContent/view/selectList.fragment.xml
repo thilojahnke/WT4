@@ -6,12 +6,12 @@
     search="handleSearch"  
     cancel="handleValueHelpCancel"
     multiSelect="false"
-    items="{ path : 'adr>/Adresses' }" >
+    items="{ path : 'adr>/ADRESSES' }" >
 
    
    
-   <StandardListItem title="{adr>kunnr}" 
-   description="{parts: [{path: 'adr>name1' },{path: 'adr>name2' }]}" 
+   <StandardListItem title="{adr>KUNNR}" 
+   description="{parts: [{path: 'adr>NAME1' },{path: 'adr>NAME2' }]}" 
    type="Active" />
    
    

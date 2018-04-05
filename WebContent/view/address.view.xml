@@ -1,6 +1,7 @@
 <mvc:View xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m"
-	controllerName="WT4.controller.address" xmlns:html="http://www.w3.org/1999/xhtml">
+	controllerName="WT4.controller.address"
+	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<Page title="{i18n>pageTitle}" id="page1">
 			<Panel headerText="{i18n>panelText}">
@@ -47,17 +48,17 @@
 							<f:formElements>
 								<f:FormElement label="{i18n>kunnr}">
 									<f:fields>
-									<VBox>
-															    
-									     <Input value="{/kunnr}" 
-									      showValueHelp="true"
-									      valueHelpRequest="handleValueHelp"/>
-									       
-									    
-									    </VBox>
+										<VBox>
+
+											<Input value="{/kunnr}" showValueHelp="true"
+												valueHelpRequest="handleValueHelp" />
+
+
+										</VBox>
 										<VBox>
 											<Button text="U" press="onButtonPressUp" width="40px" />
-											<Button text="D" press="onButtonPressDown" width="40px" />
+											<Button text="D" press="onButtonPressDown"
+												width="40px" />
 										</VBox>
 										<Button text="LIST" press="onButtonList" width="100%" />
 									</f:fields>
@@ -75,6 +76,19 @@
 									<f:fields>
 										<Text
 											text="{parts: [{path: '/name2' },{path: '/name1' }],formatter:'.joiner' }" />
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+							<f:formElements>
+								<f:FormElement label="Odata1">
+									<f:fields>
+										<List headerText="Odata" id="list"
+											items="{oAdr>/ADRESSES}" noDataText="">
+											<items>
+												<StandardListItem title="{oAdr>KUNNR}"
+													description="{parts: [{path: 'oAdr>NAME1'},{path: 'oAdr>NAME2'}]}" />
+											</items>
+										</List>
 									</f:fields>
 								</f:FormElement>
 							</f:formElements>

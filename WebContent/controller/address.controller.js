@@ -11,25 +11,33 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 	return Controller.extend("WT4.controller.address", {
 		onInit : function() {
 			var oAdrComponent = this.getOwnerComponent();
-			var oAdrModel = oAdrComponent.getModel("adr");
 			var oJModelData = {
 				meta : {
 					nummer : 0,
-					shades : [ sap.ui.layout.BlockLayoutCellColorShade.ShadeA,
-							sap.ui.layout.BlockLayoutCellColorShade.ShadeB,
-							sap.ui.layout.BlockLayoutCellColorShade.ShadeC,
-							sap.ui.layout.BlockLayoutCellColorShade.ShadeD ],
+					
 				},
-				kunnr : "Init",
-				name1 : "Init",
-				name2 : "Init"
+				kunnr : "",
+				name1 : "",
+				name2 : ""
 			};
 
 			var oJsonModel = new JSONModel(oJModelData);
 			this.getView().setModel(oJsonModel);
 
 			var oAdrElement = this.getView().byId("page1");
-
+			
+			var oOAdrModel = oAdrComponent.getModel("oAdr");
+            oOAdrModel.read("/ADRESSES",{
+            	success : function(oData,response){
+            	  var oModelData = { "ADRESSES":  oData.results };
+            	  var oAdrModel = oAdrComponent.getModel("adr");
+            	  oAdrModel.setData(oModelData);
+            	},
+            	error: function(oError){
+            	 alert("Reading the ODATA Service Failed");
+            	}
+            	
+            } );
 			/*
 			 * var oInputElement = this.getView().byId("inputIndex"); let
 			 * oMessageManger = sap.ui.getCore().getMessageManager();
@@ -50,15 +58,15 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			let oAdrComponent = self.getOwnerComponent();
 			let oDefaultModel = self.getView().getModel();
 			let oAdrModel = oAdrComponent.getModel("adr");
-			let iAdrLength = oAdrModel.getProperty("/Adresses").length;
+			let iAdrLength = oAdrModel.getProperty("/ADRESSES").length;
 			let strShowNumber = oDefaultModel.getProperty("/meta/nummer");
 			let iShowNumber = parseInt(strShowNumber);
 			oDefaultModel.setProperty("/meta/nummer", strShowNumber);
-			let sPathToAdress = "/Adresses/" + strShowNumber + "/";
+			let sPathToAdress = "/ADRESSES/" + strShowNumber + "/";
 			let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
-			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.kunnr);
-			oDefaultModel.setProperty("/name1", oAdrModelDetail.name1);
-			oDefaultModel.setProperty("/name2", oAdrModelDetail.name2);
+			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.KUNNR);
+			oDefaultModel.setProperty("/name1", oAdrModelDetail.NAME1);
+			oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
 
 		},
 		nextAdress : function(direction) {
@@ -73,12 +81,13 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			}
 			;
 
-			var sPathToAdress = "/Adresses/" + nEntryNumber + "/";
+			var sPathToAdress = "/ADRESSES/" + nEntryNumber + "/";
+
 			var oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
 
-			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.kunnr);
-			oDefaultModel.setProperty("/name1", oAdrModelDetail.name1);
-			oDefaultModel.setProperty("/name2", oAdrModelDetail.name2);
+			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.KUNNR);
+			oDefaultModel.setProperty("/name1", oAdrModelDetail.NAME1);
+			oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
 			oDefaultModel.setProperty("/meta/nummer", nEntryNumber);
 
 		},
@@ -112,7 +121,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 						"WT4.view.selectList", this);
 				oDialogView.addDependent(oDialog);
 			}
-			oDialog.getBinding("items").filter([new Filter("kunnr",sap.ui.model.FilterOperator.Contains,sInputValue)]);
+			oDialog.getBinding("items").filter([new Filter("KUNNR",sap.ui.model.FilterOperator.Contains,sInputValue)]);
 			oDialog.open(sInputValue);
 		},
 			handleValueHelpClose:function(oEvent){
@@ -123,8 +132,8 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				let oDefaultModel = this.getView().getModel();
 				var oAdrModel = oAdrComponent.getModel("adr");
 				var oModelData = oAdrModel.getData();
-				for ( let i = 0; i < oModelData.Adresses.length ; i++) {
-					if (oModelData.Adresses[i].kunnr === sText) {
+				for ( let i = 0; i < oModelData.ADRESSES.length ; i++) {
+					if (oModelData.Adresses[i].KUNNR === sText) {
 						oDefaultModel.setProperty("/meta/nummer", i);
 						this.jumpAdressNumber(this);
 						break;
@@ -135,7 +144,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 		handleSearch:function(oEvent){
 			let sValue = oEvent.getParameter("value");
 			var oFilter = new Filter(
-					"kunnr",
+					"KUNNR",
 					sap.ui.model.FilterOperator.Contains, sValue
 				);
 			oEvent.getSource().getBinding("items").filter([oFilter]);

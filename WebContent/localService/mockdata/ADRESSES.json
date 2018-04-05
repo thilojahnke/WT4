@@ -1,0 +1,21 @@
+ [
+		{   "KUNNR": "9000209701",
+			"NAME1": "Boby",
+			"NAME2": "Blue"
+		},
+		{
+			"KUNNR": "9000209706",
+			"NAME1": "Jack",
+			"NAME2": "Wonder"
+		},
+		{
+			"KUNNR": 	"100B",
+			"NAME1": "Ellen",
+			"NAME2": "Trap"
+		},
+		{
+		    "KUNNR" : "45335",
+			"NAME1":"Barbara",
+			"NAME2":"Summer"
+		}
+	]

@@ -3,7 +3,7 @@
 <head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
-        <title>MOCK SERVER"</title>
+        <title>MOCK SERVER</title>
 		<script src="../resources/sap-ui-core.js"
 				id="sap-ui-bootstrap"
 				data-sap-ui-libs="sap.m,sap.ui.layout,sap.f"
@@ -17,8 +17,10 @@
 		
 		sap.ui.getCore().attachInit(function(){
 			sap.ui.require([
-				"sap/ui/core/ComponentContainer"
-			],function(ComponentContainer){
+				"sap/ui/core/ComponentContainer",
+				"WT4/localService/mockserver"
+			],function(ComponentContainer,MockServer){
+				MockServer.init();
 				new ComponentContainer({
 					name : "WT4"
 				}).placeAt("content");	
