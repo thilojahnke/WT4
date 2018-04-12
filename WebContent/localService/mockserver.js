@@ -6,7 +6,7 @@ sap.ui.define([
 		init: function () {
 			// create
 			var oMockServer = new MockServer({
-				rootUri: "/"
+				rootUri: "/proxy/AdressODATA/Adress.xsodata/"
 			}); 
 /*			var oUriParameters = jQuery.sap.getUriParameters();
 			// configure

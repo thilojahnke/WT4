@@ -51,6 +51,7 @@
 										<VBox>
 
 											<Input value="{/kunnr}" showValueHelp="true"
+											    submit="handleSubmit"
 												valueHelpRequest="handleValueHelp" />
 
 

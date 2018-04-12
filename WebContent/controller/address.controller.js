@@ -133,13 +133,16 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				var oAdrModel = oAdrComponent.getModel("adr");
 				var oModelData = oAdrModel.getData();
 				for ( let i = 0; i < oModelData.ADRESSES.length ; i++) {
-					if (oModelData.Adresses[i].KUNNR === sText) {
+					if (oModelData.ADRESSES[i].KUNNR === sText) {
 						oDefaultModel.setProperty("/meta/nummer", i);
 						this.jumpAdressNumber(this);
 						break;
 					}
 				}
 			}
+		},
+		handleSubmit: function(oEvent){
+			var oString = oEvent;
 		},
 		handleSearch:function(oEvent){
 			let sValue = oEvent.getParameter("value");

@@ -12,7 +12,7 @@
 		},
 		"dataSources": {
 			"adressRemote": {
-				"uri": "/",
+				"uri": "/proxy/AdressODATA/Adress.xsodata/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
