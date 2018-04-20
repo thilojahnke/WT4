@@ -1,4 +1,4 @@
-<mvc:View xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+<mvc:View  xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m"
 	controllerName="WT4.controller.address"
 	xmlns:html="http://www.w3.org/1999/xhtml">
@@ -61,7 +61,7 @@
 											<Button text="D" press="onButtonPressDown"
 												width="40px" />
 										</VBox>
-										<Button text="LIST" press="onButtonList" width="100%" />
+										<Button id="LISTBUTTON" text="LIST" press="onButtonList" width="100%" />
 									</f:fields>
 
 								</f:FormElement>
@@ -83,7 +83,7 @@
 							<f:formElements>
 								<f:FormElement label="Odata1">
 									<f:fields>
-										<List headerText="Odata" id="list"
+										<List headerText="Odata Adress List" id="list"
 											items="{oAdr>/ADRESSES}" noDataText="">
 											<items>
 												<StandardListItem title="{oAdr>KUNNR}"
