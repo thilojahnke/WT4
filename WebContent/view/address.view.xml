@@ -61,7 +61,10 @@
 											<Button text="D" press="onButtonPressDown"
 												width="40px" />
 										</VBox>
-										<Button id="LISTBUTTON" text="LIST" press="onButtonList" width="100%" />
+										<VBox>
+										 <Button id="LISTBUTTON" text="LIST" press="onButtonList" width="100%" />
+										 <Button id="ADDADRESSBUTTON" text="Add" press="onButtonAdd" width="100%"/>
+										</VBox>
 									</f:fields>
 
 								</f:FormElement>
@@ -87,7 +90,9 @@
 											items="{oAdr>/ADRESSES}" noDataText="">
 											<items>
 												<StandardListItem title="{oAdr>KUNNR}"
-													description="{parts: [{path: 'oAdr>NAME1'},{path: 'oAdr>NAME2'}]}" />
+													description="{parts: [{path: 'oAdr>NAME1'},{path: 'oAdr>NAME2'}]}" 
+													type="Navigation"
+													press="onPressDetail"/>
 											</items>
 										</List>
 									</f:fields>

@@ -35,7 +35,7 @@
 	},
 	"sap.ui5": {
 		"_version": "1.0.0",
-		"rootView": "WT4.view.address",
+		"rootView": "WT4.view.AdressApp",
 		"contentDensities": {
 			"compact": true,
 			"cozy": true
@@ -62,6 +62,46 @@
 				"dataSource": "adressRemote"
 			}
 		},
-		"handleValidation": true
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "WT4.view",
+				"controlId": "adressapp",
+				"controlAggregation": "pages",
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "address",
+					"target": "address"
+				},
+				{
+					"pattern": "detail",
+					"name": "detail",
+					"target": "detail"
+				},
+				{
+					"pattern": "add",
+					"name": "add",
+					"target": "add"
+				}
+			],
+			"targets": {
+				"address": {
+					"viewId": "address",
+					"viewName": "address"
+				},
+				"detail": {
+					"viewId": "detail",
+					"viewName": "Detail"
+				},
+				"add": {
+					"viewId": "add",
+					"viewName": "AddAdress"
+				}
+			}
+		}
 	}
 }

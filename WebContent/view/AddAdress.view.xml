@@ -1,0 +1,8 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+		controllerName="WT4.controller.AddAdress" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Add a new adress">
+		<content>
+	
+		</content>
+	</Page>
+</mvc:View>

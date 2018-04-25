@@ -15,6 +15,7 @@ sap.ui.define([ "sap/ui/core/UIComponent",
 				init : function() {
 					UIComponent.prototype.init.apply(this, arguments);
 					let oMessageManger = sap.ui.getCore().getMessageManager();
+					this.getRouter().initialize();
 					var i18nModel = new ResourceModel({
 						bundleName : "WT4.i18n.i18n"
 					});

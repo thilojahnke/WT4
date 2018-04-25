@@ -104,6 +104,15 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			oDialog.open();
 
 		},
+		onButtonAdd : function(){
+			
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("add");
+		},
+		onPressDetail: function(oEvent){
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("detail");
+		},
 		onDialogClose : function() {
 			let oDialogView = this.getView();
 			let oDialog = oDialogView.byId("listDialog");
