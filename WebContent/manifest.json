@@ -78,7 +78,7 @@
 					"target": "address"
 				},
 				{
-					"pattern": "detail",
+					"pattern": "detail/{detailPath}",
 					"name": "detail",
 					"target": "detail"
 				},

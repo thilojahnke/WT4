@@ -110,8 +110,12 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			oRouter.navTo("add");
 		},
 		onPressDetail: function(oEvent){
+			var oItem = oEvent.getSource();
+			var sItem = oItem.getBindingContext("oAdr").getPath().substr(1);
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("detail");
+			oRouter.navTo("detail",{
+				detailPath : sItem
+			});
 		},
 		onDialogClose : function() {
 			let oDialogView = this.getView();

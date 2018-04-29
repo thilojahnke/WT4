@@ -1,15 +1,36 @@
-sap.ui.define([ "sap/ui/core/mvc/Controller"],
-		function(Controller){ 
+sap.ui.define([ "sap/ui/core/mvc/Controller" ,
+	            "sap/ui/core/routing/History",
+				"WT4/controller/formater"],
+		function(Controller,History,Formater){ 
 	"use strict";
-	return Controller.extend("WT4.controller.Detail"),{
+	return Controller.extend("WT4.controller.Detail", {
 		/**
 		* Called when a controller is instantiated and its View controls (if available) are already created.
 		* Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		* @memberOf view.AddAdress
 		*/
-//			onInit: function() {
-		//
-//			},
+			onInit: function() {
+				var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+				var oAnyRoute = oRouter.getRoute("detail");
+				oRouter.getRoute("detail").attachPatternMatched(this._onObjectMatched,this);
+			},
+	       _onObjectMatched : function(oEvent){
+	    	   var sBinding = "/" + oEvent.getParameter("arguments").detailPath;  
+	    	  this.getView().bindElement({
+	    		  path: sBinding,
+	    		  model: "oAdr"
+	    	  }) ;
+	       },
+	       onNavBack: function(){
+	    	 var oHistory = History.getInstance();  
+	    	 var sPrevious = oHistory.getPreviousHash();
+	    	 if (sPrevious !== undefined){
+	    		 window.history.go(-1);
+	    	 } else {
+	    		 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+	    		 oRouter.navTo("address",{},true);
+	    	 }
+	       },
 
 		/**
 		* Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -37,7 +58,9 @@ sap.ui.define([ "sap/ui/core/mvc/Controller"],
 		//
 //			}
 
-	}
+	       joiner : Formater.joiner   
+	       
+	});
 });
 
 
