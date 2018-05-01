@@ -1,15 +1,16 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:wt="WT4.control"
 		controllerName="WT4.controller.Detail" xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page title="{i18n>detailOfAdress}" showNavButton="true" navButtonPress="onNavBack" >
 		
 		<ObjectHeader intro="{parts: [{path: 'i18n>kunnr'},{path: 'oAdr>KUNNR'}]}" 
 		title="{parts: [{path: 'oAdr>NAME2' },{path: 'oAdr>NAME1' }],formatter:'.joiner'}">
+		
 		<attributes>
 		<ObjectAttribute text="{parts: [{path: 'i18n>name1' },{path: 'oAdr>NAME1'} ]}"/>
 		<ObjectAttribute text="{parts: [{path: 'i18n>name2' },{path: 'oAdr>NAME2'} ]}"/>
 		</attributes>
 		</ObjectHeader>
-	
+	   <wt:AdressRating id="rating" class="sapUiSmallMarginBeginEnd" change="onRatingChange"/>
 		
 	</Page>
 </mvc:View>

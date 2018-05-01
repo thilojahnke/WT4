@@ -31,6 +31,10 @@ sap.ui.define([ "sap/ui/core/mvc/Controller" ,
 	    		 oRouter.navTo("address",{},true);
 	    	 }
 	       },
+	       onRatingChange: function(oEvent){
+	    	   var fRatingValue = oEvent.getParameter("value");
+	    	   sap.m.MessageToast.show("Rating Changed");
+	       },
 
 		/**
 		* Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

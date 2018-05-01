@@ -1,4 +1,4 @@
-<mvc:View  xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+<mvc:View xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m"
 	controllerName="WT4.controller.address"
 	xmlns:html="http://www.w3.org/1999/xhtml">
@@ -51,8 +51,7 @@
 										<VBox>
 
 											<Input value="{/kunnr}" showValueHelp="true"
-											    submit="handleSubmit"
-												valueHelpRequest="handleValueHelp" />
+												submit="handleSubmit" valueHelpRequest="handleValueHelp" />
 
 
 										</VBox>
@@ -62,8 +61,10 @@
 												width="40px" />
 										</VBox>
 										<VBox>
-										 <Button id="LISTBUTTON" text="LIST" press="onButtonList" width="100%" />
-										 <Button id="ADDADRESSBUTTON" text="Add" press="onButtonAdd" width="100%"/>
+											<Button id="LISTBUTTON" text="LIST"
+												press="onButtonList" width="100%" />
+											<Button id="ADDADRESSBUTTON" text="Add"
+												press="onButtonAdd" width="100%" />
 										</VBox>
 									</f:fields>
 
@@ -86,15 +87,33 @@
 							<f:formElements>
 								<f:FormElement label="Odata1">
 									<f:fields>
-										<List headerText="Odata Adress List" id="list"
-											items="{oAdr>/ADRESSES}" noDataText="">
+										<Table id="list" items="{oAdr>/ADRESSES}" noDataText="">
+											<columns>
+												<Column>
+													<Text text="{i18n>kunnr}" />
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>description}" />
+
+												</Column>
+																								
+												<Column hAlign="End" minScreenWidth="Small" demandPopin="false">
+													<Text text="{i18n>ratingValue}" />
+												</Column>
+											</columns>
 											<items>
-												<StandardListItem title="{oAdr>KUNNR}"
-													description="{parts: [{path: 'oAdr>NAME1'},{path: 'oAdr>NAME2'}]}" 
-													type="Navigation"
-													press="onPressDetail"/>
+
+												<ColumnListItem type="Navigation"
+													press="onPressDetail">
+													<cells>
+														<ObjectIdentifier title="{oAdr>KUNNR}" />
+														<ObjectIdentifier title="{parts:[{path: 'oAdr>NAME2'},{path:'oAdr>NAME1'}],formatter:'.joiner'}"/>
+														<ObjectNumber number="3"/>
+														
+													</cells>
+												</ColumnListItem>
 											</items>
-										</List>
+										</Table>
 									</f:fields>
 								</f:FormElement>
 							</f:formElements>
