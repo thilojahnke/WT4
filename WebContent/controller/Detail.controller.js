@@ -15,10 +15,11 @@ sap.ui.define([ "sap/ui/core/mvc/Controller" ,
 				oRouter.getRoute("detail").attachPatternMatched(this._onObjectMatched,this);
 			},
 	       _onObjectMatched : function(oEvent){
-	    	   var sBinding = "/" + oEvent.getParameter("arguments").detailPath;  
+	    	  // var sBinding = "/" + oEvent.getParameter("arguments").detailPath;
+	    	   var sBinding = "/ADRESSES/"+oEvent.getParameter("arguments").detailPath+"/";
 	    	  this.getView().bindElement({
 	    		  path: sBinding,
-	    		  model: "oAdr"
+	    		  model: "vAdr"
 	    	  }) ;
 	       },
 	       onNavBack: function(){

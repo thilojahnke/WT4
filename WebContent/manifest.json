@@ -58,6 +58,10 @@
 			"adr": {
 				"type": "sap.ui.model.json.JSONModel"
 			},
+			"vAdr": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri" : "address.json"
+			},
 			"oAdr": {
 				"dataSource": "adressRemote"
 			}

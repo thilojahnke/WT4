@@ -14,6 +14,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			var oJModelData = {
 				meta : {
 					nummer : 0,
+					insert : false
 					
 				},
 				kunnr : "",
@@ -25,6 +26,9 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			this.getView().setModel(oJsonModel);
 
 			var oAdrElement = this.getView().byId("page1");
+			this.byId("openMenu").attachBrowserEvent("tab keyup",function(oEvent){
+				this._bKeyboard = oEvent.type == "keyup";
+			},this);
 			
 			var oOAdrModel = oAdrComponent.getModel("oAdr");
             oOAdrModel.read("/ADRESSES",{
@@ -62,6 +66,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			let strShowNumber = oDefaultModel.getProperty("/meta/nummer");
 			let iShowNumber = parseInt(strShowNumber);
 			oDefaultModel.setProperty("/meta/nummer", strShowNumber);
+			oDefaultModel.setProperty("/meta/insert", true );
 			let sPathToAdress = "/ADRESSES/" + strShowNumber + "/";
 			let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
 			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.KUNNR);
@@ -89,6 +94,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			oDefaultModel.setProperty("/name1", oAdrModelDetail.NAME1);
 			oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
 			oDefaultModel.setProperty("/meta/nummer", nEntryNumber);
+			oDefaultModel.setProperty("/meta/insert", true );
 
 		},
 		
@@ -110,12 +116,47 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			oRouter.navTo("add");
 		},
 		onPressDetail: function(oEvent){
+			var oAdrComponent = this.getOwnerComponent();
+			var oVAdr = oAdrComponent.getModel("vAdr");
 			var oItem = oEvent.getSource();
-			var sItem = oItem.getBindingContext("oAdr").getPath().substr(1);
+			var sItem = oItem.getBindingContext("vAdr").getPath().substr(10) ;
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.navTo("detail",{
 				detailPath : sItem
 			});
+		},
+		onPressOpenMenu:function(oEvent){
+			var oButton = oEvent.getSource();
+			if (!this._menu){
+				this._menu = sap.ui.xmlfragment("WT4.view.menu",this);
+				this.getView().addDependent(this._menu);
+			}
+			var eDock = sap.ui.core.Popup.Dock;
+			this._menu.open(this._bKeyboard,oButton,eDock.BeginTop,eDock.BeginBottom,oButton);
+			
+		},
+		handleMenuItemPress:function(oEvent){
+			
+			
+			var sId = oEvent.getParameter("item").getId();
+			
+				
+			switch( sId ){
+			case "_menu_newAdress":
+				this.onButtonAdd();
+				break;
+			case "_menu_addAdress":
+				sap.m.MessageToast.show("Not yet implemented");
+				break;
+			case "_menu_searchAdress":
+				this.onButtonList();
+			    break;
+			default :
+				break;
+			}
+				
+			
+			
 		},
 		onDialogClose : function() {
 			let oDialogView = this.getView();

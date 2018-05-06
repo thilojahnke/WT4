@@ -4,123 +4,104 @@
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<Page title="{i18n>pageTitle}" id="page1">
-			<Panel headerText="{i18n>panelText}">
+			<Panel headerText="{i18n>panelText}" expandable="true"
+				expanded="true">
+				<VBox class="sapUiSmallMargin">
+					<f:Form editable="false">
+						<f:title>
+							<core:Title text="{i18n>detailPanel}" />
+						</f:title>
+						<f:toolbar>
+							<Toolbar id="TB1">
+								<Title text="{i18n>chooseKunnr}" level="H4" titleStyle="H4" />
+								<ToolbarSpacer />
+								<Input value="{/kunnr}" showValueHelp="true" width="10rem"
+													submit="handleSubmit" valueHelpRequest="handleValueHelp" />
+								<ToolbarSpacer/>
+								<Button icon="sap-icon://arrow-top" press="onButtonPressUp"  />
+								<Button icon="sap-icon://arrow-bottom" press="onButtonPressDown"  />
+								<Button icon="sap-icon://dropdown" id="openMenu" press="onPressOpenMenu"/>
+							</Toolbar>
+						</f:toolbar>
+						<f:layout>
+							<f:GridLayout singleColumn="false" />
+						</f:layout>
+						<f:formContainers>
+							<f:FormContainer>
 
-				<f:Form editable="false">
-					<f:title>
-						<core:Title text="{i18n>detailPanel}" />
-					</f:title>
-					<f:layout>
-						<f:GridLayout singleColumn="false" />
-					</f:layout>
-					<f:formContainers>
-						<f:FormContainer>
+								<f:title>
+									<core:Title text="{i18n>kunde}" />
+								</f:title>
+								<f:formElements>
+									<f:FormElement label="{i18n>kunnr}">
+										<f:fields>
+											<Text text="{/kunnr}" id="kunnr" />
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="Name1">
+										<f:fields>
+											<Text text="{/name1}" id="name1" />
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="Name2">
 
-							<f:title>
-								<core:Title text="Container Label" />
-							</f:title>
-							<f:formElements>
-								<f:FormElement label="{i18n>kunnr}">
-									<f:fields>
-										<Text text="{/kunnr}" id="kunnr" />
-									</f:fields>
-								</f:FormElement>
-								<f:FormElement label="Name1">
-									<f:fields>
-										<Text text="{/name1}" id="name1" />
-									</f:fields>
-								</f:FormElement>
-								<f:FormElement label="Name2">
-
-									<f:fields>
-										<Text text="{/name2}" id="name2" />
-									</f:fields>
-								</f:FormElement>
-
-
-							</f:formElements>
-						</f:FormContainer>
-						<f:FormContainer>
-
-							<f:title>
-								<core:Title text="{i18n>chooseKunnr}" />
-							</f:title>
-							<f:formElements>
-								<f:FormElement label="{i18n>kunnr}">
-									<f:fields>
-										<VBox>
-
-											<Input value="{/kunnr}" showValueHelp="true"
-												submit="handleSubmit" valueHelpRequest="handleValueHelp" />
+										<f:fields>
+											<Text text="{/name2}" id="name2" />
+										</f:fields>
+									</f:FormElement>
 
 
-										</VBox>
-										<VBox>
-											<Button text="U" press="onButtonPressUp" width="40px" />
-											<Button text="D" press="onButtonPressDown"
-												width="40px" />
-										</VBox>
-										<VBox>
-											<Button id="LISTBUTTON" text="LIST"
-												press="onButtonList" width="100%" />
-											<Button id="ADDADRESSBUTTON" text="Add"
-												press="onButtonAdd" width="100%" />
-										</VBox>
-									</f:fields>
+								</f:formElements>
+							</f:FormContainer>
+						</f:formContainers>
 
-								</f:FormElement>
-							</f:formElements>
-						</f:FormContainer>
-						<f:FormContainer>
-
-							<f:title>
-								<core:Title text="Description Label" />
-							</f:title>
-							<f:formElements>
-								<f:FormElement label="{i18n>description}">
-									<f:fields>
-										<Text
-											text="{parts: [{path: '/name2' },{path: '/name1' }],formatter:'.joiner' }" />
-									</f:fields>
-								</f:FormElement>
-							</f:formElements>
-							<f:formElements>
-								<f:FormElement label="Odata1">
-									<f:fields>
-										<Table id="list" items="{oAdr>/ADRESSES}" noDataText="">
-											<columns>
-												<Column>
-													<Text text="{i18n>kunnr}" />
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true">
-													<Text text="{i18n>description}" />
-
-												</Column>
-																								
-												<Column hAlign="End" minScreenWidth="Small" demandPopin="false">
-													<Text text="{i18n>ratingValue}" />
-												</Column>
-											</columns>
-											<items>
-
-												<ColumnListItem type="Navigation"
-													press="onPressDetail">
-													<cells>
-														<ObjectIdentifier title="{oAdr>KUNNR}" />
-														<ObjectIdentifier title="{parts:[{path: 'oAdr>NAME2'},{path:'oAdr>NAME1'}],formatter:'.joiner'}"/>
-														<ObjectNumber number="3"/>
-														
-													</cells>
-												</ColumnListItem>
-											</items>
-										</Table>
-									</f:fields>
-								</f:FormElement>
-							</f:formElements>
-						</f:FormContainer>
-					</f:formContainers>
-				</f:Form>
+					</f:Form>
+				</VBox>
 			</Panel>
+			<f:Form>
+				<f:layout>
+					<f:GridLayout singleColumn="false" />
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>workingList}">
+								<f:fields>
+									<Table id="list" items="{vAdr>/ADRESSES}" noDataText="">
+										<columns>
+											<Column>
+												<Text text="{i18n>kunnr}" />
+											</Column>
+											<Column minScreenWidth="Tablet" demandPopin="true">
+												<Text text="{i18n>description}" />
+
+											</Column>
+
+											<Column hAlign="End" minScreenWidth="Small"
+												demandPopin="false">
+												<Text text="{i18n>ratingValue}" />
+											</Column>
+										</columns>
+										<items>
+
+											<ColumnListItem type="Navigation"
+												press="onPressDetail">
+												<cells>
+													<ObjectIdentifier title="{vAdr>KUNNR}" />
+													<ObjectIdentifier
+														title="{parts:[{path: 'vAdr>NAME2'},{path:'vAdr>NAME1'}],formatter:'.joiner'}" />
+													<ObjectNumber number="3" />
+
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
 		</Page>
 	</App>
 </mvc:View>
