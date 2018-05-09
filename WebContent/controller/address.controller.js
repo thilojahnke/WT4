@@ -23,7 +23,8 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			};
 
 			var oJsonModel = new JSONModel(oJModelData);
-			this.getView().setModel(oJsonModel);
+			//this.getView().setModel(oJsonModel);
+			oAdrComponent.setModel(oJsonModel);
 
 			var oAdrElement = this.getView().byId("page1");
 			this.byId("openMenu").attachBrowserEvent("tab keyup",function(oEvent){
@@ -119,7 +120,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			var oAdrComponent = this.getOwnerComponent();
 			var oVAdr = oAdrComponent.getModel("vAdr");
 			var oItem = oEvent.getSource();
-			var sItem = oItem.getBindingContext("vAdr").getPath().substr(10) ;
+			var sItem = oItem.getBindingContext("vAdr").getPath().substr('/ADRESSES/'.length) ;
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.navTo("detail",{
 				detailPath : sItem
@@ -146,7 +147,15 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				this.onButtonAdd();
 				break;
 			case "_menu_addAdress":
-				sap.m.MessageToast.show("Not yet implemented");
+				var oAdrComponent = this.getOwnerComponent();
+				var oVAdr = oAdrComponent.getModel("vAdr");
+				var oVBew = "/ADRESSES/" + oVAdr.getProperty("/ADRESSES").length + "/";
+				
+				var oDefMod = oAdrComponent.getModel();
+				var oJson = {"KUNNR": oDefMod.getProperty("/kunnr"), "NAME1": oDefMod.getProperty("/name1"),
+						 "NAME2" : oDefMod.getProperty("/name2") };
+				oVAdr.setProperty(oVBew, oJson );
+//				sap.m.MessageToast.show("Not yet implemented");
 				break;
 			case "_menu_searchAdress":
 				this.onButtonList();
