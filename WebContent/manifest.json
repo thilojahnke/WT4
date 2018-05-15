@@ -88,7 +88,7 @@
 				},
 				{
 					"pattern": "add",
-					"name": "add",
+					"name": "AddAdress",
 					"target": "add"
 				}
 			],

@@ -43,6 +43,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
             	}
             	
             } );
+            
 			/*
 			 * var oInputElement = this.getView().byId("inputIndex"); let
 			 * oMessageManger = sap.ui.getCore().getMessageManager();
@@ -111,10 +112,21 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			oDialog.open();
 
 		},
-		onButtonAdd : function(){
+		onButtonNew : function(){
 			
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("add");
+			this.getOwnerComponent().getRouter().navTo("AddAdress",{});
+			//oRouter.navTo("add");
+		},
+		onButtonAdd:function(){
+			var oAdrComponent = this.getOwnerComponent();
+			var oVAdr = oAdrComponent.getModel("vAdr");
+			var oVBew = "/ADRESSES/" + oVAdr.getProperty("/ADRESSES").length + "/";
+			
+			var oDefMod = oAdrComponent.getModel();
+			var oJson = {"KUNNR": oDefMod.getProperty("/kunnr"), "NAME1": oDefMod.getProperty("/name1"),
+					 "NAME2" : oDefMod.getProperty("/name2") };
+			oVAdr.setProperty(oVBew, oJson );
 		},
 		onPressDetail: function(oEvent){
 			var oAdrComponent = this.getOwnerComponent();
@@ -144,18 +156,11 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				
 			switch( sId ){
 			case "_menu_newAdress":
-				this.onButtonAdd();
+				this.onButtonNew();
 				break;
 			case "_menu_addAdress":
-				var oAdrComponent = this.getOwnerComponent();
-				var oVAdr = oAdrComponent.getModel("vAdr");
-				var oVBew = "/ADRESSES/" + oVAdr.getProperty("/ADRESSES").length + "/";
 				
-				var oDefMod = oAdrComponent.getModel();
-				var oJson = {"KUNNR": oDefMod.getProperty("/kunnr"), "NAME1": oDefMod.getProperty("/name1"),
-						 "NAME2" : oDefMod.getProperty("/name2") };
-				oVAdr.setProperty(oVBew, oJson );
-//				sap.m.MessageToast.show("Not yet implemented");
+                this.onButtonAdd();
 				break;
 			case "_menu_searchAdress":
 				this.onButtonList();
@@ -167,6 +172,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			
 			
 		},
+		
 		onDialogClose : function() {
 			let oDialogView = this.getView();
 			let oDialog = oDialogView.byId("listDialog");

@@ -22,7 +22,8 @@
 			],function(ComponentContainer,MockServer){
 				MockServer.init();
 				new ComponentContainer({
-					name : "WT4"
+					name : "WT4",
+					handleValidation: true
 				}).placeAt("content");	
 			})
 			

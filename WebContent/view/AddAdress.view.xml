@@ -1,8 +1,59 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
-		controllerName="WT4.controller.AddAdress" xmlns:html="http://www.w3.org/1999/xhtml">
-	<Page title="Add a new adress">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" 	xmlns:f="sap.ui.layout.form" xmlns="sap.m"
+	controllerName="WT4.controller.AddAdress"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>addAdressTitle}">
 		<content>
-	
+		<f:Form id="AddAdressForm" editable="true" title="Anlage Neukunde">
+		<f:layout>
+              <f:ResponsiveGridLayout />
+         </f:layout>
+		<f:formContainers>
+		<f:FormContainer>
+		<f:FormElement>
+		<Label text="Kundennummer" required="true" />
+		<f:fields>
+		  <Input  id="idAddInputKunnr" 
+		  type="Text" validationError="onValidationError" 
+		  validationSuccess="onValidationSuccess"
+		  value="{path: '/kunnr', type: 'sap.ui.model.type.String', 
+		           constraints: { search: '^[A-Z0-9]{1,10}$'} }" />
+		           
+		</f:fields>
+		</f:FormElement>
+		<f:FormElement>
+		<f:fields>
+		<Label  text="Name1" required="true" />
+		<Input id="idAddInputName1"  type="Text" validationError="onValidationError" 
+			value="{path: '/name1', type: 'sap.ui.model.type.String', 
+		           constraints: {search : '^[\u00C0-\u017FA-Za-z- ]{3,35}$'} }"/>
+		</f:fields>
+		</f:FormElement>
+		<f:FormElement>
+		<f:fields>
+		<Label text="Name2" required="true" />
+		<Input  id="idAddInputName2" type="Text" validationError="onValidationError"
+		value="{path: '/name2', type: 'sap.ui.model.type.String', 
+		           constraints: {search : '^[\u00C0-\u017FA-Za-z- ]{3,35}$'} }"/>
+		    
+		</f:fields>
+		</f:FormElement>
+		</f:FormContainer>
+		</f:formContainers>
+		</f:Form>
+
 		</content>
+		<footer>
+			<Toolbar>	
+				<Button icon="sap-icon://message-popup" text="{= ${message>/}.length }"
+				    visible="{= ${message>/}.length > 0 }"
+					type="Emphasized" press="onMessagePopoverPress" />
+				<ToolbarSpacer />
+				<Button text="Accept" type="Accept" press="onAccept"
+				enabled="{= ${message>/}.length === 0 }" />
+				<Button text="Reject" type="Reject" press="onReject"/>
+				<Button icon="sap-icon://reset" press="onReset"/>
+			</Toolbar>
+		</footer>
+
 	</Page>
 </mvc:View>
