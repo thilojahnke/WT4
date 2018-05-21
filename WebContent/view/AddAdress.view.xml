@@ -13,7 +13,8 @@
 		<Label text="Kundennummer" required="true" />
 		<f:fields>
 		  <Input  id="idAddInputKunnr" 
-		  type="Text" validationError="onValidationError" 
+		  type="Text" 
+		  validationError="onValidationError" 
 		  validationSuccess="onValidationSuccess"
 		  value="{path: '/kunnr', type: 'sap.ui.model.type.String', 
 		           constraints: { search: '^[A-Z0-9]{1,10}$'} }" />
@@ -23,7 +24,9 @@
 		<f:FormElement>
 		<f:fields>
 		<Label  text="Name1" required="true" />
-		<Input id="idAddInputName1"  type="Text" validationError="onValidationError" 
+		<Input id="idAddInputName1"  type="Text" 
+		validationError="onValidationError"
+		validationSuccess="onValidationSuccess" 
 			value="{path: '/name1', type: 'sap.ui.model.type.String', 
 		           constraints: {search : '^[\u00C0-\u017FA-Za-z- ]{3,35}$'} }"/>
 		</f:fields>
@@ -31,7 +34,9 @@
 		<f:FormElement>
 		<f:fields>
 		<Label text="Name2" required="true" />
-		<Input  id="idAddInputName2" type="Text" validationError="onValidationError"
+		<Input  id="idAddInputName2" type="Text" 
+		validationError="onValidationError"
+		validationSuccess="onValidationSuccess"
 		value="{path: '/name2', type: 'sap.ui.model.type.String', 
 		           constraints: {search : '^[\u00C0-\u017FA-Za-z- ]{3,35}$'} }"/>
 		    

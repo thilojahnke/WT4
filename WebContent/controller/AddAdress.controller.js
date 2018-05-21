@@ -7,6 +7,13 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 	            ],
 		function(Controller,Message,MessageType,JSONModel){ 
 	"use strict";
+// Fields in form with valuation	
+	var mFields = ["idAddInputKunnr","idAddInputName1","idAddInputName2"];
+// At new valuation delete these messages	
+	var mDelMessages = [{field:mFields[0] , messages:["E100","E101"]},		
+		{field:mFields[1] , messages:["E102"]},
+		{field:mFields[2] , messages:["E103"]}
+];
 	return Controller.extend("WT4.controller.AddAdress",{
 		/* @memberOf view.AddAdress */
 			onInit: function() {	
@@ -35,6 +42,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			    oMessageManager.addMessages(oMessage); */
 
 			},
+			
 			onValidationError:function(oEvent){
 		    var source = oEvent.getSource();
 		    var sourceId = source.getId();
@@ -60,30 +68,43 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				
 			},
 			onValidationSuccess:function(oEvent){
+				
 				var source = oEvent.getSource();
 			    var sourceId = source.getId();
 			    var oElement = oEvent.getParameters("element");
 				var oMessageModel = sap.ui.getCore().getMessageManager().getMessageModel();
 				var oProp;
-			    if (sourceId.endsWith("idAddInputKunnr")){
+				for (var i=0;i<mFields.length;i++){
+			    if (sourceId.endsWith(mFields[i])){
 			       var mMessages = oMessageModel.getProperty("/");
+			       var iMsgIndex = mDelMessages.findIndex(function(element){
+			    	    return element.field == mFields[i] ;
+			    		   
+			    	   
+			       });
+			       if (iMsgIndex > -1 ){
+			    	   var mMsg = mDelMessages[iMsgIndex].messages;
+			       }
+			       
 			        mMessages.forEach(function(message){
-			        	if (message.id === "E100"){
+			        	if (mMsg.findIndex(function(element){
+			        		return element === message.id
+			        	}) > -1 ){
 			        		sap.ui.getCore().getMessageManager().removeMessages(message);
-			        		return message;
+			        		//return message;
 			        	}
 			        	}
 			        )}
-			        
+				}
+			     //  return true; 
 			},
 			onReset : function(){
 			 var oDefMod = this.getView().getModel();
-			 var oInput = this.getView().byId("idAddInputKunnr");
+			 for (var i=0;i<mFields.length;i++){
+			 var oInput = this.getView().byId(mFields[i]);
 			 oInput.setValue("");
-			 oInput = this.getView().byId("idAddInputName1");
-			 oInput.setValue("");
-			 oInput = this.getView().byId("idAddInputName2");
-			 oInput.setValue("");
+			 }
+			 
 			 oDefMod.setProperty("/kunnr","");
 			 oDefMod.setProperty("/name1","");
 			 oDefMod.setProperty("/name2","");
@@ -94,25 +115,31 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			},
 			onAccept : function(){
 				var oMessageManager = sap.ui.getCore().getMessageManager();
+				var bStatus = true;
 				var oDefMod = this.getView().getModel();
 				// kunnr darf nicht leer sein
 				var sProp = "/kunnr";
 				if (oDefMod.getProperty(sProp) == "" ){
-					this.addMessage("E101",sProp);
-					return false;
+					this.addMessage("E101",sProp);// kunnr should not be empty
+					bStatus = false;
+				} else if (!this.checkKunnr()){
+					 this.addMessage("E100",sProp)
+					 bStatus = false;
 				}
-				if (!this.checkKunnr()){
-					 var oMessage = new Message({
-			                message: "Kundennummer ist bereits vergeben",
-			                type: MessageType.Error,
-			                target: "/kunnr",
-			                id: "E100",
-			                processor: this.getView().getModel()
-			            });
-					    oMessageManager.addMessages(oMessage); 
-
+				sProp = "/name1";
+				if (oDefMod.getProperty(sProp) == "" ){
+					this.addMessage("E102",sProp);//name1 should not be empty
+					bStatus = false;
+				}
+				sProp = "/name2";
+				if (oDefMod.getProperty(sProp) == "" ){
+					this.addMessage("E103",sProp);//name2 should not be empty
+					bStatus = false;
 					
 				}
+				 if ( bStatus ){
+				     this.addAdr();	 
+				 }
 				
 			},
 			onReject : function(){
@@ -127,8 +154,18 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				
 				this._oMessagePopover.openBy(oEvent.getSource());
 			},
+			addAdr : function(){
+				var oComponent = this.getOwnerComponent();
+				var oAdrModel = oComponent.getModel('adr');
+				var test1 = oAdrModel.getProperty("/ADRESSES/1/");
+				oAdrModel.setProperty("/ADRESSES/4/","{KUNNR:'123',NAME1:'Hans',NAME2:'KLUG' }");
+				var oDefMod = this.getView().getModel();
+				
+			},
 			checkKunnr : function(){
 				var oComponent = this.getOwnerComponent();
+				var oDefMod = this.getView().getModel();
+				var sKunnr = oDefMod.getProperty("/kunnr");
 				var oAdrModel = oComponent.getModel('adr');
 				var mAdresses = oAdrModel.getProperty('/ADRESSES');
 				if (mAdresses === undefined ){
@@ -137,15 +174,14 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				if(mAdresses.length == 0 ){
 					return true;
 				}
-				if (mAdresses.find(function(element){
-					if( 1==2){
-						return true;
-					}
-				})){
+				if (mAdresses.findIndex(function(element){
+					return element.KUNNR === sKunnr;
+				}) > -1){
 					return false;
 				}
-				return false;
+				return true;
 			},
+			
 			addMessage: function(codeno,target){
 				var oMessageManager = sap.ui.getCore().getMessageManager();
 				var oI18nModel = this.getOwnerComponent().getModel("i18n");
