@@ -7,8 +7,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 ], function(Controller, ResourceModel, JSONModel, Filter, Formater) {
 
 	"use strict";
-
-	return Controller.extend("WT4.controller.address", {
+    var oControllerObject = Controller.extend("WT4.controller.address", {
 		onInit : function() {
 			var oAdrComponent = this.getOwnerComponent();
 			var oJModelData = {
@@ -229,4 +228,6 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 
 	});
 
-});
+ 
+	return oControllerObject 
+	});
