@@ -8,7 +8,7 @@ sap.ui.define([
 	"sap/m/Button"
 ],function(Control,RatingIndicator,Label,Button){
 "use strict";
-return Control.extend("WT4.control.AdressRating",{
+var oControllerObject = Control.extend("WT4.control.AdressRating",{
 	metadata: {
 		properties: {
 			value : {type: "float", defaultValue: 0 }
@@ -16,7 +16,7 @@ return Control.extend("WT4.control.AdressRating",{
 		aggregations: {
 			_rating: {type: "sap.m.RatingIndicator", multiple : false, visibility: "hidden" },
 			_label: {type: "sap.m.Label", multiple: false, visibility: "hidden" },
-			_button: {type: "sap.m.Button", multiple: false, visibility: "hidden" }
+			_button1: {type: "sap.m.Button", multiple: false, visibility: "hidden" }
 		},
 		events : {
 			change: {
@@ -38,11 +38,12 @@ return Control.extend("WT4.control.AdressRating",{
 		this.setAggregation("_label", new Label({
 			text : "Hallo Rating"
 		}).addStyleClass("sapUiSmallMargin"));
-		this.setAggregation("_button", new Button({
+		this.setAggregation("_button1", new Button({
 			text : "Button",
 			press: this._onSubmit.bind(this)
 		}).addStyleClass("sapUiTinyMarginTopBottom"));
 	},
+	
 	setValue: function (fValue) {
 		this.setProperty("value", fValue, true);
 		this.getAggregation("_rating").setValue(fValue);
@@ -52,23 +53,33 @@ return Control.extend("WT4.control.AdressRating",{
 		this.getAggregation("_label").setDesign("Standard");
 		this.getAggregation("_rating").setEnabled(true);
 		this.getAggregation("_label").setText("LabelInitial");
-		this.getAggregation("_button").setEnabled(true);	
+		this.getAggregation("_button1").setEnabled(true);	
 	},
 	_onRate : function (oEvent) {
 		var fValue = oEvent.getParameter("value");
 		this.setProperty("value", fValue, true);
-		this.getAggregation("_label").setText("RatingLabelIndicator", [fValue, oEvent.getSource().getMaxValue()]);
+		this.getAggregation("_label").setText(this.getRatingText(fValue));
 		this.getAggregation("_label").setDesign("Bold");
 	},
 	_onSubmit : function (oEvent) {
 		
 
-		this.getAggregation("_rating").setEnabled(false);
+  /*  	this.getAggregation("_rating").setEnabled(false);
 		this.getAggregation("_label").setText("RatingLabelFinal");
-		this.getAggregation("_button").setEnabled(false);
+		this.getAggregation("_button1").setEnabled(true);*/
 		this.fireEvent("change", {
 			value: this.getValue()
 		});
+	},
+	getRatingText(value){
+		var i18nModel = new sap.ui.model.resource.ResourceModel({
+			bundleName : "WT4.i18n.i18n"
+		});
+		var test = i18nModel.getProperty("/Rating1");
+		return "ungenügend";
+		
+		
+		
 	},
 	renderer: function(oRM,oControl){
 		oRM.write("<div");
@@ -78,11 +89,12 @@ return Control.extend("WT4.control.AdressRating",{
 		oRM.write(">");
 		oRM.renderControl(oControl.getAggregation("_rating"));
 		oRM.renderControl(oControl.getAggregation("_label"));
-		oRM.renderControl(oControl.getAggregation("_button"));
+		oRM.renderControl(oControl.getAggregation("_button1"));
 		oRM.write("</div>");
 	}
 
 })
 	
+return oControllerObject;
 	
 })
