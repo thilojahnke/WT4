@@ -18,7 +18,8 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				},
 				kunnr : "",
 				name1 : "",
-				name2 : ""
+				name2 : "",
+				rating: ""
 			};
 
 			var oJsonModel = new JSONModel(oJModelData);
@@ -124,7 +125,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			
 			var oDefMod = oAdrComponent.getModel();
 			var oJson = {"KUNNR": oDefMod.getProperty("/kunnr"), "NAME1": oDefMod.getProperty("/name1"),
-					 "NAME2" : oDefMod.getProperty("/name2") };
+					 "NAME2" : oDefMod.getProperty("/name2"), "RATING" : oDefMod.getProperty("/rating")};
 			oVAdr.setProperty(oVBew, oJson );
 		},
 		onPressDetail: function(oEvent){

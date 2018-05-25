@@ -27,6 +27,7 @@ var oControllerObject = Control.extend("WT4.control.AdressRating",{
 		}
 	},
 	init: function(){
+		
 		this.setAggregation("_rating", new RatingIndicator({
 			value: this.getValue(),
 			maxValue : 6,
@@ -35,11 +36,13 @@ var oControllerObject = Control.extend("WT4.control.AdressRating",{
 			liveChange: this._onRate.bind(this)
 			
 			}));
+		
+		
 		this.setAggregation("_label", new Label({
-			text : "Hallo Rating"
+			text : "{i18n>Rating0}"
 		}).addStyleClass("sapUiSmallMargin"));
 		this.setAggregation("_button1", new Button({
-			text : "Button",
+			text : "{i18n>RatingCommit}",
 			press: this._onSubmit.bind(this)
 		}).addStyleClass("sapUiTinyMarginTopBottom"));
 	},
@@ -72,11 +75,10 @@ var oControllerObject = Control.extend("WT4.control.AdressRating",{
 		});
 	},
 	getRatingText(value){
-		var i18nModel = new sap.ui.model.resource.ResourceModel({
-			bundleName : "WT4.i18n.i18n"
-		});
-		var test = i18nModel.getProperty("/Rating1");
-		return "ungenügend";
+		var oResourceBundle = this.getModel("i18n").getResourceBundle();
+		var sRate = "Rating" + value.toString();
+		  return  oResourceBundle.getText(sRate);
+		
 		
 		
 		

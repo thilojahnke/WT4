@@ -13,6 +13,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller" ,
 					var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 					var oAnyRoute = oRouter.getRoute("detail");
 					oRouter.getRoute("detail").attachPatternMatched(this._onObjectMatched,this);
+					
 				},
 		       _onObjectMatched : function(oEvent){
 		    	  // var sBinding = "/" + oEvent.getParameter("arguments").detailPath;
@@ -21,8 +22,17 @@ sap.ui.define([ "sap/ui/core/mvc/Controller" ,
 		    		  path: sBinding,
 		    		  model: "vAdr"
 		    	  }) ;
+		    	  var oVadrModel = this.getView().getModel("vAdr");
+		    	  var sPath = sBinding + "RATING";
+		    	  var sValue = oVadrModel.getProperty(sPath);
+		    	  if (typeof sValue === "number"){
+		    	  this.getView().byId("rating").setValue(sValue);
+		    	  }
 		       },
 		       onNavBack: function(){
+          // BewertungsControl zurücksetzen		    	   
+		    	 var oValueControl = this.getView().byId("rating");
+		    	 oValueControl.reset();
 		    	 var oHistory = History.getInstance();  
 		    	 var sPrevious = oHistory.getPreviousHash();
 		    	 if (sPrevious !== undefined){
@@ -33,7 +43,13 @@ sap.ui.define([ "sap/ui/core/mvc/Controller" ,
 		    	 }
 		       },
 		       onRatingChange: function(oEvent){
+		    	   
 		    	   var fRatingValue = oEvent.getParameter("value");
+		    	   var oVadrModel = this.getView().getModel("vAdr");
+		    	   var sPath = this.getView().getElementBinding("vAdr").getBoundContext().getPath();
+		    	   var sProp = sPath+"/RATING";
+		    	   oVadrModel.setProperty(sProp,fRatingValue);
+//		    	   var test = oVAdrModel.getProperty("/ADRESSES/");
 		    	   sap.m.MessageToast.show("Rating Changed");
 		       },
 
