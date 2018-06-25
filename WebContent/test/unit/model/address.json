@@ -1,0 +1,23 @@
+{
+	"ADRESSES": [
+		{   "KUNNR": "9000209700",
+			"NAME1": "John",
+			"NAME2": "Doo"
+		},
+		{
+			"KUNNR": "9000209705",
+			"NAME1": "William",
+			"NAME2": "Little"
+		},
+		{
+			"KUNNR": 	"100A",
+			"NAME1": "Susan",
+			"NAME2": "Vega"
+		},
+		{
+		    "KUNNR" : "45334",
+			"NAME1":"Hellen",
+			"NAME2":"DeMont"
+		}
+	]
+}

@@ -1,0 +1,113 @@
+{
+	"_version": "1.1.0",
+	"sap.app": {
+		"_version": "1.1.0",
+		"id": "WT4",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"adressRemote": {
+				"uri": "/destinations/adr1/AdressODATA/Adress.xsodata/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"_version": "1.1.0",
+		"technology": "UI5",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"_version": "1.1.0",
+		"rootView": "WT4.view.AdressApp",
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"dependencies": {
+			"minUI5Version": "1.30",
+			"libs": {
+				"sap.m": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "WT4.i18n.i18n"
+				}
+			},
+			"adr": {
+				"type": "sap.ui.model.json.JSONModel"
+			},
+			"vAdr": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "address.json"
+			},
+			"oAdr": {
+				"dataSource": "adressRemote"
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "WT4.view",
+				"controlId": "adressapp",
+				"controlAggregation": "pages",
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "address",
+					"target": "address"
+				},
+				{
+					"pattern": "detail/{detailPath}",
+					"name": "detail",
+					"target": "detail"
+				},
+				{
+					"pattern": "add",
+					"name": "AddAdress",
+					"target": "add"
+				}
+			],
+			"targets": {
+				"address": {
+					"viewId": "address",
+					"viewName": "address"
+				},
+				"detail": {
+					"viewId": "detail",
+					"viewName": "Detail"
+				},
+				"add": {
+					"viewId": "add",
+					"viewName": "AddAdress"
+				}
+			}
+		}
+	},
+	"sap.platform.hcp": {
+		"uri": "WebContent",
+		"_version": "1.1.0"
+	}
+}

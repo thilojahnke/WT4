@@ -1,0 +1,234 @@
+sap.ui.define([ "sap/ui/core/mvc/Controller",
+		"sap/ui/model/resource/ResourceModel",
+		"sap/ui/model/json/JSONModel",
+		"sap/ui/model/Filter",
+		"WT4/controller/formater"
+
+], function(Controller, ResourceModel, JSONModel, Filter, Formater) {
+
+	"use strict";
+    var oControllerObject = Controller.extend("WT4.controller.address", {
+		onInit : function() {
+			var oAdrComponent = this.getOwnerComponent();
+			var oJModelData = {
+				meta : {
+					nummer : 0,
+					insert : false
+					
+				},
+				kunnr : "",
+				name1 : "",
+				name2 : "",
+				rating: ""
+			};
+
+			var oJsonModel = new JSONModel(oJModelData);
+			//this.getView().setModel(oJsonModel);
+			oAdrComponent.setModel(oJsonModel);
+
+			var oAdrElement = this.getView().byId("page1");
+			this.byId("openMenu").attachBrowserEvent("tab keyup",function(oEvent){
+				this._bKeyboard = oEvent.type == "keyup";
+			},this);
+			
+			var oOAdrModel = oAdrComponent.getModel("oAdr");
+            oOAdrModel.read("/Adress",{
+            	success : function(oData,response){
+            	  var oModelData = { "ADRESSES":  oData.results };
+            	  var oAdrModel = oAdrComponent.getModel("adr");
+            	  oAdrModel.setData(oModelData);
+            	},
+            	error: function(oError){
+            	 alert("Reading the ODATA Service Failed");
+            	}
+            	
+            } );
+            
+			/*
+			 * var oInputElement = this.getView().byId("inputIndex"); let
+			 * oMessageManger = sap.ui.getCore().getMessageManager();
+			 * oMessageManger.registerObject(oInputElement,true);
+			 */
+			// var oAdrBinding = "/";
+			// var oAdrElementBound = oAdrElement.bindElement(oAdrBinding);
+
+		},
+		onButtonPressUp : function() {
+			this.nextAdress("UP");
+		},
+		onButtonPressDown : function() {
+			this.nextAdress("DOWN");
+		},
+		jumpAdressNumber : function(self) {
+
+			var oAdrComponent = self.getOwnerComponent();
+			var oDefaultModel = self.getView().getModel();
+			var oAdrModel = oAdrComponent.getModel("adr");
+			var iAdrLength = oAdrModel.getProperty("/ADRESSES").length;
+			var strShowNumber = oDefaultModel.getProperty("/meta/nummer");
+			var iShowNumber = parseInt(strShowNumber);
+			oDefaultModel.setProperty("/meta/nummer", strShowNumber);
+			oDefaultModel.setProperty("/meta/insert", true );
+			var sPathToAdress = "/ADRESSES/" + strShowNumber + "/";
+			var oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
+			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.KUNNR);
+			oDefaultModel.setProperty("/name1", oAdrModelDetail.NAME1);
+			oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
+
+		},
+		nextAdress : function(direction) {
+			var oAdrComponent = this.getOwnerComponent();
+			var oDefaultModel = this.getView().getModel();
+			var oAdrModel = oAdrComponent.getModel("adr");
+			var nEntryNumber = oDefaultModel.getProperty("/meta/nummer");
+			if (direction === "UP") {
+				nEntryNumber++;
+			} else {
+				nEntryNumber--;
+			}
+			;
+
+			var sPathToAdress = "/ADRESSES/" + nEntryNumber + "/";
+
+			var oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
+
+			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.KUNNR);
+			oDefaultModel.setProperty("/name1", oAdrModelDetail.NAME1);
+			oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
+			oDefaultModel.setProperty("/meta/nummer", nEntryNumber);
+			oDefaultModel.setProperty("/meta/insert", true );
+
+		},
+		
+		onButtonList : function() {
+			var oDialogView = this.getView();
+			var oDialog = oDialogView.byId("listDialog");
+
+			if (!oDialog) {
+				oDialog = sap.ui.xmlfragment(oDialogView.getId(),
+						"WT4.view.selectList", this);
+				oDialogView.addDependent(oDialog);
+			}
+			oDialog.open();
+
+		},
+		onButtonNew : function(){
+			
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			this.getOwnerComponent().getRouter().navTo("AddAdress",{});
+			//oRouter.navTo("add");
+		},
+		onButtonAdd:function(){
+			var oAdrComponent = this.getOwnerComponent();
+			var oVAdr = oAdrComponent.getModel("vAdr");
+			var oVBew = "/ADRESSES/" + oVAdr.getProperty("/ADRESSES").length + "/";
+			
+			var oDefMod = oAdrComponent.getModel();
+			var oJson = {"KUNNR": oDefMod.getProperty("/kunnr"), "NAME1": oDefMod.getProperty("/name1"),
+					 "NAME2" : oDefMod.getProperty("/name2"), "RATING" : oDefMod.getProperty("/rating")};
+			oVAdr.setProperty(oVBew, oJson );
+		},
+		onPressDetail: function(oEvent){
+			var oAdrComponent = this.getOwnerComponent();
+			var oVAdr = oAdrComponent.getModel("vAdr");
+			var oItem = oEvent.getSource();
+			var sItem = oItem.getBindingContext("vAdr").getPath().substr('/ADRESSES/'.length) ;
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("detail",{
+				detailPath : sItem
+			});
+		},
+		onPressOpenMenu:function(oEvent){
+			var oButton = oEvent.getSource();
+			if (!this._menu){
+				this._menu = sap.ui.xmlfragment("WT4.view.menu",this);
+				this.getView().addDependent(this._menu);
+			}
+			var eDock = sap.ui.core.Popup.Dock;
+			this._menu.open(this._bKeyboard,oButton,eDock.BeginTop,eDock.BeginBottom,oButton);
+			
+		},
+		handleMenuItemPress:function(oEvent){
+			
+			
+			var sId = oEvent.getParameter("item").getId();
+			
+				
+			switch( sId ){
+			case "_menu_newAdress":
+				this.onButtonNew();
+				break;
+			case "_menu_addAdress":
+				
+                this.onButtonAdd();
+				break;
+			case "_menu_searchAdress":
+				this.onButtonList();
+			    break;
+			default :
+				break;
+			}
+				
+			
+			
+		},
+		
+		onDialogClose : function() {
+			var oDialogView = this.getView();
+			var oDialog = oDialogView.byId("listDialog");
+			if (oDialog) {
+				oDialog.close();
+			}
+		},
+		handleValueHelp : function(oEvent) {
+			var sInputValue = oEvent.getSource().getValue();
+			var oDialogView = this.getView();
+			var oDialog = oDialogView.byId("listDialog");
+
+			if (!oDialog) {
+				oDialog = sap.ui.xmlfragment(oDialogView.getId(),
+						"WT4.view.selectList", this);
+				oDialogView.addDependent(oDialog);
+			}
+			oDialog.getBinding("items").filter([new Filter("KUNNR",sap.ui.model.FilterOperator.Contains,sInputValue)]);
+			oDialog.open(sInputValue);
+		},
+			handleValueHelpClose:function(oEvent){
+			var oSelectedItem= oEvent.getParameter("selectedItem");
+			if (oSelectedItem){
+				var sText = oSelectedItem.getTitle();
+				var oAdrComponent = this.getOwnerComponent();
+				var oDefaultModel = this.getView().getModel();
+				var oAdrModel = oAdrComponent.getModel("adr");
+				var oModelData = oAdrModel.getData();
+				for ( var i = 0; i < oModelData.ADRESSES.length ; i++) {
+					if (oModelData.ADRESSES[i].KUNNR === sText) {
+						oDefaultModel.setProperty("/meta/nummer", i);
+						this.jumpAdressNumber(this);
+						break;
+					}
+				}
+			}
+		},
+		handleSubmit: function(oEvent){
+			var oString = oEvent;
+		},
+		handleSearch:function(oEvent){
+			var sValue = oEvent.getParameter("value");
+			var oFilter = new Filter(
+					"KUNNR",
+					sap.ui.model.FilterOperator.Contains, sValue
+				);
+			oEvent.getSource().getBinding("items").filter([oFilter]);
+		},
+		handleValueHelpCancel:function(oEvent){
+			oEvent.getSource().getBinding("items").filter([]);
+		},
+
+		joiner : Formater.joiner
+
+	});
+
+ 
+	return oControllerObject 
+	});

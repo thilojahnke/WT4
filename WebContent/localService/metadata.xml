@@ -1,0 +1,20 @@
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+	<edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0"
+		xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+		<Schema Namespace="AdressODATA.Adress" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+			<EntityType Name="AdressType">
+				<Key>
+					<PropertyRef Name="KUNNR"/>
+				</Key>
+				<Property Name="KUNNR" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true"/>
+				<Property Name="NAME1" Type="Edm.String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true"/>
+				<Property Name="NAME2" Type="Edm.String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true"/>
+				<Property Name="RATING" Type="Edm.Int32"/>
+			</EntityType>
+			<EntityContainer Name="Adress" m:IsDefaultEntityContainer="true" p6:LazyLoadingEnabled="true"
+				xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+				<EntitySet Name="Adress" EntityType="AdressODATA.Adress.AdressType"/>
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
