@@ -158,15 +158,38 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 		addAdr : function(){
 			var oComponent = this.getOwnerComponent();
 			var oAdrModel = oComponent.getModel('adr');
-			var oAdrs = oAdrModel.getProperty("/ADRESSES"); 
+//            var oAdrs = oAdrModel.getProperty("/ADRESSES"); 
+            var oAdr = oComponent.getModel("oAdr");
 			var oDefMod = this.getView().getModel();		
 			var oNewAdr = {KUNNR: oDefMod.getProperty("/kunnr"),NAME1:oDefMod.getProperty("/name1"),
-					NAME2: oDefMod.getProperty("/name2")};
-			var sTarget = "/ADRESSES/" + oAdrs.length + "/";
-			oAdrModel.setProperty(sTarget,oNewAdr);
-			var oDefMod = this.getView().getModel();
-			 sap.m.MessageToast.show("Kunde hinzugefügt");
-			this.navBack();
+                    NAME2: oDefMod.getProperty("/name2"), Value: oDefMod.getProperty("/value" )};
+            var fnAddAdress = (sUrl)=>{
+                return new Promise((resolve,reject)=>{
+                    oAdr.create(sUrl,oNewAdr,{
+                        success: (oData,response)=>{
+                            resolve(oData)
+                        },
+                        error: (error)=>{
+                            reject(error)
+                        }
+                        
+                    })
+                }
+
+                )};  
+            fnAddAdress("/Adress").then( (oData)=>{
+                var oAdrModel = oComponent.getModel('adr'); 
+                var oAdrs = oAdrModel.getProperty("/ADRESSES"); 
+                var sTarget = "/ADRESSES/" + oAdrs.length + "/";
+                      oAdrModel.setProperty(sTarget,oData);
+			    
+			                sap.m.MessageToast.show("Kunde hinzugefügt");
+			                this.navBack();
+            })
+            .catch( ()=>{
+
+            }) ;    
+			
 			
 		},
 		checkKunnr : function(){

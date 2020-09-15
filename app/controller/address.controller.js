@@ -19,38 +19,37 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 				kunnr : "",
 				name1 : "",
 				name2 : "",
-				rating: ""
-			};
+				value : ""
+            };
+            var oAdr = oAdrComponent.getModel("oAdr");
 
+        const fnReadCustomer = (sUrl)=>{
+            return new Promise((resolve,reject)=>{
+                oAdr.read(sUrl,{
+                    success: (oData,response)=>{
+                        resolve(oData.results)
+                    },
+                    error: (error)=>{
+                        reject(error);
+                    }
+
+                })
+            })
+        }
 			var oJsonModel = new JSONModel(oJModelData);
 			//this.getView().setModel(oJsonModel);
-			oAdrComponent.setModel(oJsonModel);
+            oAdrComponent.setModel(oJsonModel);
+            fnReadCustomer("/Adress").then(
+                (results)=>{
+                    var oModelData = {"ADRESSES":  results };
+                    var oAdrModel = oAdrComponent.getModel("adr");
+            	    oAdrModel.setData(oModelData);
+                }
 
-			var oAdrElement = this.getView().byId("page1");
-			this.byId("openMenu").attachBrowserEvent("tab keyup",function(oEvent){
-				this._bKeyboard = oEvent.type == "keyup";
-			},this);
-			
-			var oOAdrModel = oAdrComponent.getModel("oAdr");
-            oOAdrModel.read("/ADRESSES",{
-            	success : function(oData,response){
-            	  var oModelData = { "ADRESSES":  oData.results };
-            	  var oAdrModel = oAdrComponent.getModel("adr");
-            	  oAdrModel.setData(oModelData);
-            	},
-            	error: function(oError){
-            	 alert("Reading the ODATA Service Failed");
-            	}
-            	
-            } );
-            
-			/*
-			 * var oInputElement = this.getView().byId("inputIndex"); let
-			 * oMessageManger = sap.ui.getCore().getMessageManager();
-			 * oMessageManger.registerObject(oInputElement,true);
-			 */
-			// var oAdrBinding = "/";
-			// var oAdrElementBound = oAdrElement.bindElement(oAdrBinding);
+            ).catch(()=>{
+                alert("init ODATA Services failed");
+            });
+
 
 		},
 		onButtonPressUp : function() {
@@ -73,7 +72,8 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			let oAdrModelDetail = oAdrModel.getProperty(sPathToAdress);
 			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.KUNNR);
 			oDefaultModel.setProperty("/name1", oAdrModelDetail.NAME1);
-			oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
+            oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
+            oDefaultModel.setProperty("/value", oAdrModelDetail.Value);
 
 		},
 		nextAdress : function(direction) {
@@ -94,11 +94,13 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 
 			oDefaultModel.setProperty("/kunnr", oAdrModelDetail.KUNNR);
 			oDefaultModel.setProperty("/name1", oAdrModelDetail.NAME1);
-			oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
+            oDefaultModel.setProperty("/name2", oAdrModelDetail.NAME2);
+            oDefaultModel.setProperty("/value" ,oAdrModelDetail.Value);
 			oDefaultModel.setProperty("/meta/nummer", nEntryNumber);
 			oDefaultModel.setProperty("/meta/insert", true );
 
-		},
+        },
+        
 		
 		onButtonList : function() {
 			let oDialogView = this.getView();
@@ -125,7 +127,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			
 			var oDefMod = oAdrComponent.getModel();
 			var oJson = {"KUNNR": oDefMod.getProperty("/kunnr"), "NAME1": oDefMod.getProperty("/name1"),
-					 "NAME2" : oDefMod.getProperty("/name2"), "RATING" : oDefMod.getProperty("/rating")};
+					 "NAME2" : oDefMod.getProperty("/name2"), "Value" : oDefMod.getProperty("/value")};
 			oVAdr.setProperty(oVBew, oJson );
 		},
 		onPressDetail: function(oEvent){
@@ -147,6 +149,13 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			var eDock = sap.ui.core.Popup.Dock;
 			this._menu.open(this._bKeyboard,oButton,eDock.BeginTop,eDock.BeginBottom,oButton);
 			
+        },
+        onDialogClose : function() {
+			let oDialogView = this.getView();
+			let oDialog = oDialogView.byId("listDialog");
+			if (oDialog) {
+				oDialog.close();
+			}
 		},
 		handleMenuItemPress:function(oEvent){
 			
@@ -173,13 +182,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller",
 			
 		},
 		
-		onDialogClose : function() {
-			let oDialogView = this.getView();
-			let oDialog = oDialogView.byId("listDialog");
-			if (oDialog) {
-				oDialog.close();
-			}
-		},
+		
 		handleValueHelp : function(oEvent) {
 			let sInputValue = oEvent.getSource().getValue();
 			let oDialogView = this.getView();

@@ -49,7 +49,12 @@
 											<Text text="{/name2}" id="name2" />
 										</f:fields>
 									</f:FormElement>
+                                       <f:FormElement label="Rating">
 
+										<f:fields>
+											<Text text="{/value}" id="value" />
+										</f:fields>
+									</f:FormElement>
 
 								</f:formElements>
 							</f:FormContainer>
@@ -90,7 +95,7 @@
 													<ObjectIdentifier title="{vAdr>KUNNR}" />
 													<ObjectIdentifier
 														title="{parts:[{path: 'vAdr>NAME2'},{path:'vAdr>NAME1'}],formatter:'.joiner'}" />
-													<ObjectNumber number="{vAdr>RATING}" />
+													<ObjectNumber number="{vAdr>Value}" />
 
 												</cells>
 											</ColumnListItem>

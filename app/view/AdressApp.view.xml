@@ -1,0 +1,5 @@
+<mvc:View controllerName="WT4.controller.AdressApp" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml" displayBlock="true">
+    
+        <App id="adressapp" />
+    
+</mvc:View>

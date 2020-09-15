@@ -23,7 +23,7 @@ sap.ui.define([ "sap/ui/core/mvc/Controller" ,
 		    		  model: "vAdr"
 		    	  }) ;
 		    	  var oVadrModel = this.getView().getModel("vAdr");
-		    	  var sPath = sBinding + "RATING";
+		    	  var sPath = sBinding + "Value";
 		    	  var sValue = oVadrModel.getProperty(sPath);
 		    	  if (typeof sValue === "number"){
 		    	  this.getView().byId("rating").setValue(sValue);
@@ -47,10 +47,36 @@ sap.ui.define([ "sap/ui/core/mvc/Controller" ,
 		    	   var fRatingValue = oEvent.getParameter("value");
 		    	   var oVadrModel = this.getView().getModel("vAdr");
 		    	   var sPath = this.getView().getElementBinding("vAdr").getBoundContext().getPath();
-		    	   var sProp = sPath+"/RATING";
-		    	   oVadrModel.setProperty(sProp,fRatingValue);
-//		    	   var test = oVAdrModel.getProperty("/ADRESSES/");
-		    	   sap.m.MessageToast.show("Rating Changed");
+                   var sProp = sPath+"/Value";
+                   var oDMod = this.getOwnerComponent().getModel();
+                   var oAdrMod = this.getOwnerComponent().getModel("oAdr");
+                   oDMod.setProperty("/value",fRatingValue);
+                   const fnRatingChange = (sUrl) => {
+                       const oAdress = { KUNNR: oDMod.getProperty("/kunnr"),
+                                 NAME1: oDMod.getProperty("/name1"),
+                                NAME2: oDMod.getProperty("/name2"),
+                               Value : oDMod.getProperty("/value")} ;
+                       return new Promise((resolve,reject)=>{
+                            oAdrMod.update(sUrl,oAdress,{
+                            success: (oData)=>{
+                                resolve(oData);
+                            },
+                            error: (error)=>{
+                                reject(error);
+                            }
+                            })
+                       })
+
+                   };
+                   const sUrl = "/Adress('"+oDMod.getProperty("/kunnr") +"')" ;
+                   fnRatingChange(sUrl).then( () => { 
+                       oDMod.setProperty("/value",fRatingValue);
+                       oVadrModel.setProperty(sProp,fRatingValue );
+                       sap.m.MessageToast.show("Rating Changed");
+                     });
+		    	   
+
+		    	   
 		       },
 
 			/**
