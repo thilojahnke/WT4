@@ -6,7 +6,7 @@ sap.ui.define([ "sap/ui/core/UIComponent",
 		"sap/ui/model/json/JSONModel"
 		
 		],
-		function(UIComponent, ResourceModel, JSONModel,Formater) {
+		function(UIComponent, ResourceModel) {
 			"use strict";
 			return UIComponent.extend("WT4.Component", {
 				metadata : {
@@ -19,14 +19,7 @@ sap.ui.define([ "sap/ui/core/UIComponent",
 						bundleName : "WT4.i18n.i18n"
 					});
 					this.setModel(i18nModel, "i18n");
-//					var oJModelData = {
-//						nummer : 0,
-//						name1 : "Init",
-//						name2 : "Init"
-//					}
-//
-//    			   var oJsonModel = new JSONModel(oJModelData);
-//					this.setModel(oJsonModel);
+
                    
 				}
 			});

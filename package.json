@@ -1,0 +1,38 @@
+{
+  "name": "wt4",
+  "version": "1.0.0",
+  "description": "value your customer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "ui5 serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thilojahnke/WT4.git"
+  },
+  "author": "Thilo Jahnke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thilojahnke/WT4/issues"
+  },
+  "homepage": "https://github.com/thilojahnke/WT4#readme",
+  "devDependencies": {
+    "@sap/cds-dk": "^3.0.0",
+    "@ui5/cli": "^2.4.1",
+    "sqlite3": "^5.0.0"
+  },
+  "dependencies": {
+    "@sap/cds-odata-v2-adapter-proxy": "^1.4.44"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": "WT4.db"
+        }
+      }
+    }
+  }
+}
