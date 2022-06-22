@@ -20,7 +20,7 @@
   "devDependencies": {
     "@sap/cds-dk": "^3.0.0",
     "@ui5/cli": "^2.4.1",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.3"
   },
   "dependencies": {
     "@sap/cds-odata-v2-adapter-proxy": "^1.4.44"
